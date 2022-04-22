@@ -1,3 +1,8 @@
+# Data directory
+data/comma2k19/*
+!/data/comma2k19/.gitkeep
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
