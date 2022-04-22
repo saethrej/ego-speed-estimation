@@ -1,0 +1,19 @@
+
+paths:
+  input_path: /Users/lsc/Development/data/ego-speed-estimate/input
+  output_path: /Users/lsc/Development/data/ego-speed-estimate/output
+
+seed: 12345678
+
+dataloader:
+  dataset_name: 'comma-ai'
+  dataloader_name: 'default'
+
+preprocessing:
+
+
+model:
+  model_name: 'cnn-lstm'
+  num_epochs: 1
+  batch_size: 32
+  learning_rate: 0.001
