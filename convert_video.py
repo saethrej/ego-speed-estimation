@@ -7,7 +7,7 @@ outfilename = "video.mp4"
 def main():
     this_dir = os.getcwd()
     for root, subFolders, files in os.walk(this_dir):
-        if not filename in files:
+        if (not filename in files) or (outfilename in files):
             continue
         #print("This file: " + os.path.join(root, filename))
         #print("Output file: " + os.path.join(root, outfilename))
