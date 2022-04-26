@@ -29,7 +29,7 @@ class CommaAI(torch.utils.data.Dataset):
 
         # Get video object
         video, _, _ = torchvision.io.read_video(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
-        video_timestamps, _, _ = torchvision.io.read_video_timestamps(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
+        video_timestamps, _ = torchvision.io.read_video_timestamps(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
         
         if self.video_transform:
             video = self.video_transform(video)
