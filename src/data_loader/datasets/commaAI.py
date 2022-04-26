@@ -29,13 +29,18 @@ class CommaAI(torch.utils.data.Dataset):
 
         # Get video object
         video, _, _ = torchvision.io.read_video(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
+        video_timestamps, _, _ = torchvision.io.read_video_timestamps(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
         
         if self.video_transform:
             video = self.video_transform(video)
+            
+        # Get metadata per video frame
+        video_speed = np.interp(video_timestamps, speed_time, speed_value)
 
         output = {
             'path': self.path_name_data + os.sep + str(sample_name),
             'video_frames': video,
+            'video_speed': video_speed,
             'speed_time': speed_time,
             'speed_value': speed_value
         }
