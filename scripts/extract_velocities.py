@@ -34,7 +34,7 @@ def extract():
         ideal_times = np.linspace(0, 59.95, 1200)
 
         # find the indices that store the time stamps closest to the ideal one
-        indices = find_nearest(true_times, ideal_times)
+        indices = find_nearest(true_times.flatten(), ideal_times.flatten())
         extracted_speeds = speeds[indices]
         
         # dump extracted speeds to a file
