@@ -1,78 +1,89 @@
-
+import logging as log
 import os
+from random import sample
+from turtle import speed
 import torch
 import torchvision
 import numpy as np
 
+
 class CommaAI(torch.utils.data.Dataset):
+
+    video_name = "video.mp4"
+    speed_name = "speeds.npy"
 
     def __init__(self, config, mode, frame_transform, video_transform=None):
         super(CommaAI).__init__()
 
+        # save the mode (train or val)
         self.mode = mode
-        self.path_name_data = config.paths.input_path + os.sep + config.dataset_config.data_dir + os.sep + mode
-        self.sample_names = os.listdir(self.path_name_data)
 
+        # save the transforms
         self.frame_transform = frame_transform
         self.video_transform = video_transform
 
+        # store information on the number of frames of a video and a sample
+        self.video_length = config.dataset_config.video_length
+        self.sample_length = config.dataset_config.sample_length
+
+        # create mapping from indices to paths of sample with that index
+        self.sample_paths = None
+        self.num_samples = 0
+        self.__compute_mapping(config)
+
+
     def __len__(self):
-        return len(self.sample_names)
+        ''' returns the number of samples in the dataset'''
+        return self.num_samples
 
     def __getitem__(self, idx):
+        ''' returns a video sample with the given index '''
 
-        sample_name = self.sample_names[idx]
+        video_path = os.path.join(self.sample_paths[idx], CommaAI.video_name)
+        speed_path = os.path.join(self.sample_paths[idx], CommaAI.speed_name)
 
-        # Get metadata 
-        speed_time = np.load(self.path_name_data + os.sep + str(sample_name) + os.sep + 'processed_log' + os.sep + 'CAN' + os.sep + 'speed' + os.sep + 't')
-        speed_value = np.load(self.path_name_data + os.sep + str(sample_name) +  os.sep + 'processed_log' + os.sep + 'CAN' + os.sep + 'speed' + os.sep + 'value')
+        # load video an extract a random subsequence of fixed length
+        offset = np.random.randint(0, self.video_length - self.sample_length)
+        video_frames = torchvision.io.read_video(video_path)[0][offset : offset + self.sample_length]
+        log.debug("Loaded frame with index {}".format(idx))
 
-        # Get video object
-        video, _, _ = torchvision.io.read_video(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
-        video_timestamps, _ = torchvision.io.read_video_timestamps(self.path_name_data + os.sep + sample_name + os.sep + 'video.mp4')
-        
+        # permute axis ([T,H,W,3] -> [T,3,H,W]) and apply transform to it (if applicable)
+        video_frames = np.transpose(video_frames, (0, 3, 1, 2))
         if self.video_transform:
-            video = self.video_transform(video)
-            
-        # Get metadata per video frame
-        video_speed = np.interp(video_timestamps, speed_time, speed_value)
+            video_frames = self.video_transform(video_frames)
 
-        output = {
-            'path': self.path_name_data + os.sep + str(sample_name),
-            'video_frames': video,
-            'video_speed': video_speed,
-            'speed_time': speed_time,
-            'speed_value': speed_value
-        }
+        # load speed data and extract same subsequence
+        frame_speeds = np.load(speed_path).flatten()[offset : offset + self.sample_length]
 
-        return output
+        # return the frames and the speeds as a tuple
+        return (video_frames, frame_speeds)
 
-    def __getitem__old(self, idx):
 
-        sample_name = self.sample_names[idx]
-
-        # Get metadata 
-        speed_time = np.load(self.path_name_data + os.sep + str(sample_name) + os.sep + 'processed_log' + os.sep + 'CAN' + os.sep + 'speed' + os.sep + 't')
-        speed_value = np.load(self.path_name_data + os.sep + str(sample_name) +  os.sep + 'processed_log' + os.sep + 'CAN' + os.sep + 'speed' + os.sep + 'value')
-
-        # Get video object
+    def __compute_mapping(self, config):
+        ''' computes a mapping from index to the path to the corresponding sample'''
+        if self.mode == "train":
+            temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.train]
+        elif self.mode == "val":
+            temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.val]
         
-        #frame_reader = FrameReader(self.path_name_data + os.sep + sample_name + os.sep + 'video.hevc')
-        video_frames = []
-        for idx in range(len(speed_value)):
-            frame = np.array(frame_reader.get(idx, pix_fmt='rgb24')[0], dtype=np.float64)
-            frame = self.frame_transform(frame)
-            video_frames.append(frame)
-        video = torch.stack(video_frames, 0)
+        # walk through all training samples and record their paths
+        sample_count = 0
+        sample_list = []
+        for dir in temp_dirs:
+            for root, subfolders, files in os.walk(dir):
+                # skip all directories that do not contain a video and speed values
+                if not ("video.mp4" in files and "speeds.npy" in files):
+                    continue
+                
+                # add root to sample list and increase counter
+                sample_list.append(root)
+                sample_count += 1
+        
+        # sort the samples by their path for (perhaps) faster access
+        sample_list.sort()
+        self.sample_paths = sample_list
+        self.num_samples = sample_count
 
-        if self.video_transform:
-            video = self.video_transform(video)
+        log.info("{} set has {} samples.".format(self.mode, self.num_samples))
 
-        output = {
-            'path': self.path_name_data + os.sep + str(sample_name),
-            'video_frames': video,
-            'speed_time': speed_time,
-            'speed_value': speed_value
-        }
 
-        return output

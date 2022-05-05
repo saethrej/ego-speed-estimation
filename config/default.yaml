@@ -1,7 +1,11 @@
 
 paths:
-  input_path: /Users/lsc/Development/data/ego-speed-estimate/input
-  output_path: /Users/lsc/Development/data/ego-speed-estimate/output
+  local:
+    input_path: /home/jenseirik/OneDrive/ETH/master/3d-vision/project/data
+    output_path: /home/jenseirik/OneDrive/ETH/master/3d-vision/project/out
+  euler:
+    input_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/data
+    output_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out
 
 seed: 12345678
 
