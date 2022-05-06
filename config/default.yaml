@@ -19,5 +19,5 @@ preprocessing:
 model:
   model_name: 'cnn-lstm'
   num_epochs: 1
-  batch_size: 32
+  batch_size: 8
   learning_rate: 0.001

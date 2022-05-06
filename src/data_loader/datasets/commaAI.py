@@ -1,7 +1,7 @@
 import logging as log
 import os
+import math
 from random import sample
-from turtle import speed
 import torch
 import torchvision
 import numpy as np
@@ -43,9 +43,14 @@ class CommaAI(torch.utils.data.Dataset):
         speed_path = os.path.join(self.sample_paths[idx], CommaAI.speed_name)
 
         # load video an extract a random subsequence of fixed length
-        offset = np.random.randint(0, self.video_length - self.sample_length)
-        video_frames = torchvision.io.read_video(video_path)[0][offset : offset + self.sample_length]
-        log.debug("Loaded frame with index {}".format(idx))
+        offset = np.random.randint(0, 48 - math.ceil(self.sample_length/25) - 1)
+        video_frames = torchvision.io.read_video(
+            video_path, 
+            start_pts=offset, 
+            end_pts=offset + self.sample_length/25 + 1, 
+            pts_unit="sec"
+        )[0][:self.sample_length].float()
+        log.debug("Reading video with idx {}.".format(idx))
 
         # permute axis ([T,H,W,3] -> [T,3,H,W]) and apply transform to it (if applicable)
         video_frames = np.transpose(video_frames, (0, 3, 1, 2))
@@ -53,7 +58,8 @@ class CommaAI(torch.utils.data.Dataset):
             video_frames = self.video_transform(video_frames)
 
         # load speed data and extract same subsequence
-        frame_speeds = np.load(speed_path).flatten()[offset : offset + self.sample_length]
+        frame_speeds = np.load(speed_path).flatten()[offset * 25 : offset * 25 + self.sample_length]
+        log.debug("Tensor Size Speeds = {}".format(frame_speeds.shape))
 
         # return the frames and the speeds as a tuple
         return (video_frames, frame_speeds)
