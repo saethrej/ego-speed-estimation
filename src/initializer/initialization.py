@@ -2,6 +2,7 @@
 import os
 from xmlrpc.client import Boolean
 import yaml
+from datetime import datetime as dt
 import argparse
 import numpy as np
 import random as python_random
@@ -21,7 +22,7 @@ def init_train(local: Boolean = False):
     log.info("Loaded default configuration.")
 
     # Set ouput path for this run
-    config.run_id = 'run_' + str(randint(1000, 9999))
+    config.run_id = 'run_' + dt.now().strftime("%Y-%m-%d_%H-%M-%S")
     if local:
         config.paths.input_path = config.paths.local.input_path
         config.paths.output_path = config.paths.local.output_path + os.sep + config.run_id
