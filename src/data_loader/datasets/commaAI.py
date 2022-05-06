@@ -62,7 +62,7 @@ class CommaAI(torch.utils.data.Dataset):
         log.debug("Tensor Size Speeds = {}".format(frame_speeds.shape))
 
         # return the frames and the speeds as a tuple
-        return (video_frames, frame_speeds)
+        return (video_frames, torch.from_numpy(frame_speeds).float())
 
 
     def __compute_mapping(self, config):
