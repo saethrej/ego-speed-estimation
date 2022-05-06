@@ -9,7 +9,7 @@ import numpy as np
 
 class CommaAI(torch.utils.data.Dataset):
 
-    video_name = "video.mp4"
+    video_name = "video_comcro.mp4"
     speed_name = "speeds.npy"
 
     def __init__(self, config, mode, frame_transform, video_transform=None):
@@ -50,9 +50,9 @@ class CommaAI(torch.utils.data.Dataset):
             end_pts=offset + self.sample_length/25 + 1, 
             pts_unit="sec"
         )[0][:self.sample_length].float()
-        log.debug("Reading video with idx {}.".format(idx))
+        log.debug("Read video with idx {}.".format(idx))
 
-        # permute axis ([T,H,W,3] -> [T,3,H,W]) and apply transform to it (if applicable)
+        # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
         video_frames = np.transpose(video_frames, (0, 3, 1, 2))
         if self.video_transform:
             video_frames = self.video_transform(video_frames)

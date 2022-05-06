@@ -51,6 +51,6 @@ for t in range(epochs):
 log.info("Training complete.")
 
 # Store model weights
-model_path = os.path.join(config.paths.output_path, 'model_weights', 'model_weights.pth')
+model_path = os.path.join(config.paths.output_path, 'model_weights.pth')
 torch.save(model.state_dict(), model_path)
 log.info("Model weights stored under {}.".format(model_path))
