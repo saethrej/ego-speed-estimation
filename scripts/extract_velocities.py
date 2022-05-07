@@ -3,6 +3,9 @@ import math
 from posixpath import dirname
 import numpy as np
 
+speedfile = "value"
+timefile = "t"
+
 def find_nearest(array, value):
     idx = np.searchsorted(array, value, side="left")
 
@@ -21,11 +24,9 @@ def extract():
         # skip all directories that do not contain CAN speed values
         if not root.endswith('CAN/speed'):
             continue
-            
-        full_paths = [os.path.join(root, f) for f in files]
-        
-        speeds = np.load(full_paths[0])
-        times = np.load(full_paths[1])
+
+        speeds = np.load(os.path.join(root, speedfile))
+        times = np.load(os.path.join(root, timefile))
 
         # subtract start time from all time stamps 
         true_times = times - times[0]

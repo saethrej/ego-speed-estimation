@@ -1,0 +1,9 @@
+numpy
+torch
+torchvision
+tk
+tqdm
+av
+PyYAML
+python_box
+Pillow==9.1.0
