@@ -40,7 +40,7 @@ model = build_model(config)
 log.info("Built model. Starting training loop.")
 
 # Training Loop
-loss_fn = nn.CrossEntropyLoss()
+loss_fn = nn.MSELoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=config.model.learning_rate)
 
 epochs = 10
