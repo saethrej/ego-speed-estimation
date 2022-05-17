@@ -31,12 +31,16 @@ if args.local:
 else:
     config = init_train()
 
+device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+log.info("Using device: {}".format(device))
+
 # Get dataloader
 dataloaders = train_dataloader(config)
 log.info("Initialized dataloader.")
 
 # Build model
 model = build_model(config)
+model.to(device)
 log.info("Built model. Starting training loop.")
 
 # Training Loop
@@ -46,8 +50,8 @@ optimizer = torch.optim.SGD(model.parameters(), lr=config.model.learning_rate)
 epochs = 10
 for t in range(epochs):
     log.info("Starting epoch {}/{}.".format(t+1, epochs))
-    train_loop(dataloaders['train'], model, loss_fn, optimizer)
-    test_loop(dataloaders['val'], model, loss_fn)
+    train_loop(dataloaders['train'], model, loss_fn, optimizer, device)
+    test_loop(dataloaders['val'], model, loss_fn, device)
 log.info("Training complete.")
 
 # Store model weights

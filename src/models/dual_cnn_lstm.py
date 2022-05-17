@@ -24,6 +24,7 @@ class DualCnnLstm(nn.Module):
                 stride=1,
                 padding=0
             ),
+            nn.AvgPool2d(2),
             nn.BatchNorm2d(16),
             nn.ReLU()
         )
@@ -49,6 +50,7 @@ class DualCnnLstm(nn.Module):
                 stride=1,
                 padding=0
             ),
+            nn.MaxPool2d(2),
             nn.BatchNorm2d(16),
             nn.ReLU()
         )
@@ -75,6 +77,7 @@ class DualCnnLstm(nn.Module):
                 stride=1,
                 padding=0
             ),
+            nn.MaxPool2d(2),
             nn.BatchNorm2d(16),
             nn.ReLU()
         )
@@ -82,7 +85,9 @@ class DualCnnLstm(nn.Module):
         # LSTM
 
         self.lstm = nn.LSTM(
-            input_size= 576928, # 16 * ( (118 - (12-1) - 2*(24-1)) * (290 - (12-1) - 2*(24-1)) + (118 - 3*(12-1)) * (290 - 3*(12-1))
+            input_size = 16128, # 16 * ( ((118 - (12-1))/3 - 2*(24-1)) * ((290 - (12-1))/3 - 2*(24-1)) + ((118 - (12-1))/3 - 2*(12-1)) * ((290 - (12-1))/3 - 2*(12-1))
+            #input_size= 576928, # 16 * ( (118 - (12-1) - 2*(24-1)) * (290 - (12-1) - 2*(24-1)) + (118 - 3*(12-1)) * (290 - 3*(12-1))
+            #input_size= 847872, # 16 * ( (118 - (5-1) - 2*(12-1)) * (290 - (5-1) - 2*(12-1)) + (118 - (5-1) - 2*(6-1)) * (290 - (5-1) - 2*(6-1))
             hidden_size=64,
             num_layers=1,
             batch_first = True
@@ -105,6 +110,7 @@ class DualCnnLstm(nn.Module):
         self.H = x.size(3)
         self.W = x.size(4)
         NL = self.N * self.L
+        log.debug("Input shape x: {}".format(x.shape))
 
         # combine batch and frame dimensions [N, L, 3, H, W] -> [N*L, 3, H, W]
         x2 = x.view(NL, 3, self.H, self.W)
@@ -125,8 +131,8 @@ class DualCnnLstm(nn.Module):
         log.debug("Output shape of local branch - x5_1: {}".format(x5_2.shape))
 
         # Flatten and concat both branches for LSTM
-        x6_1 = x5_1.view(self.N, self.L, -1)
-        x6_2 = x5_2.view(self.N, self.L, -1)
+        x6_1 = x5_1.reshape(self.N, self.L, -1)
+        x6_2 = x5_2.reshape(self.N, self.L, -1)
         x7 = torch.concat((x6_1, x6_2), dim=2)
         log.debug("Input shape of LSTM - x7: {}".format(x7.shape))
 

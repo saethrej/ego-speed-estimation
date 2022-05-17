@@ -21,4 +21,4 @@ dirs:
     #'Chunk_9', 'Chunk_10']
 
 video_length: 1200
-sample_length: 60
+sample_length: 120
