@@ -6,4 +6,5 @@ tqdm
 av
 PyYAML
 python_box
+pickle
 Pillow==9.1.0

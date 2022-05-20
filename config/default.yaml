@@ -1,8 +1,8 @@
 
 paths:
   local:
-    input_path: /home/jenseirik/OneDrive/ETH/master/3d-vision/project/data
-    output_path: /home/jenseirik/OneDrive/ETH/master/3d-vision/project/out
+    input_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/data
+    output_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/out
   euler:
     input_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/data
     output_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out
@@ -17,7 +17,7 @@ preprocessing:
 
 
 model:
-  model_name: 'cnn-lstm'
-  num_epochs: 1
-  batch_size: 8
+  model_name: 'dual-cnn-lstm'
+  num_epochs: 40
+  batch_size: 16
   learning_rate: 0.001

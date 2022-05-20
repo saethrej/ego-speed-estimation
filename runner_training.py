@@ -1,6 +1,7 @@
 
 import os
 import torch
+import math
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
@@ -31,26 +32,37 @@ if args.local:
 else:
     config = init_train()
 
+device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+log.info("Using device: {}".format(device))
+
 # Get dataloader
 dataloaders = train_dataloader(config)
 log.info("Initialized dataloader.")
 
 # Build model
 model = build_model(config)
+model.to(device)
+model_path = os.path.join(config.paths.output_path, 'model_weights.pth')
 log.info("Built model. Starting training loop.")
 
 # Training Loop
-loss_fn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=config.model.learning_rate)
+loss_fn = nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=config.model.learning_rate)
 
-epochs = 10
-for t in range(epochs):
-    log.info("Starting epoch {}/{}.".format(t+1, epochs))
-    train_loop(dataloaders['train'], model, loss_fn, optimizer)
-    test_loop(dataloaders['val'], model, loss_fn)
+best_loss = float('inf')
+num_epochs = config.model.num_epochs
+
+for t in range(num_epochs):
+    log.info("Starting epoch {}/{}.\n".format(t+1, num_epochs) )
+    train_loop(dataloaders['train'], model, loss_fn, optimizer, device)
+    val_loss = test_loop(dataloaders['val'], model, loss_fn, device)
+
+    # save model if it has the best validation score
+    if val_loss < best_loss:
+        best_loss = val_loss
+        torch.save(model.state_dict(), model_path)
+        log.info("Model weights stored under {}.".format(model_path))
+
 log.info("Training complete.")
 
-# Store model weights
-model_path = os.path.join(config.paths.output_path, 'model_weights.pth')
-torch.save(model.state_dict(), model_path)
-log.info("Model weights stored under {}.".format(model_path))
+

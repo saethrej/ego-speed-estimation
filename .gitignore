@@ -2,8 +2,12 @@
 data/comma2k19/*
 !/data/comma2k19/.gitkeep
 
+# output files from euler
+lsf.o*
+
 # Local stuff
 *.local
+out/*
 
 
 # Byte-compiled / optimized / DLL files
@@ -117,6 +121,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+3d_env/
 
 # Spyder project settings
 .spyderproject
