@@ -133,7 +133,7 @@ class DualCnnLstm(nn.Module):
         # Flatten and concat both branches for LSTM
         x6_1 = x5_1.reshape(self.N, self.L, -1)
         x6_2 = x5_2.reshape(self.N, self.L, -1)
-        x7 = torch.concat((x6_1, x6_2), dim=2)
+        x7 = torch.cat((x6_1, x6_2), dim=2)
         log.debug("Input shape of LSTM - x7: {}".format(x7.shape))
 
         # Apply LSTM
