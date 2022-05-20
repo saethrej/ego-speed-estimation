@@ -63,7 +63,24 @@ class CommaAI(torch.utils.data.Dataset):
                 end_pts=offset + self.sample_length/25 + 1, 
                 pts_unit="sec"
             )[0][:self.sample_length].float()
-            log.info("Read video with idx {} again. New shape: {}".format(idx, video_frames.shape))
+            while (video_frames.shape[0] != self.sample_length):
+                if(idx > 0):
+                    idx -= 1
+                else:
+                    idx = len(self.sample_paths) - 1
+                log.warning("Video is faulty. Try other video with idx {}.".format(idx))
+                video_path = os.path.join(self.sample_paths[idx], CommaAI.video_name)
+                speed_path = os.path.join(self.sample_paths[idx], CommaAI.speed_name)
+
+                offset = np.random.randint(0, 48 - math.ceil(self.sample_length/25) - 1)
+                video_frames = torchvision.io.read_video(
+                    video_path, 
+                    start_pts=offset, 
+                    end_pts=offset + self.sample_length/25 + 1, 
+                    pts_unit="sec"
+                )[0][:self.sample_length].float()
+            
+            log.info("Read new video with idx {}. New shape: {}".format(idx, video_frames.shape))
             
 
         # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
