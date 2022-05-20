@@ -1,0 +1,567 @@
+Sender: LSF System <lsfadmin@eu-lo-s4-043>
+Subject: Job 219084125: <python runner_training.py> in cluster <euler> Exited
+
+Job <python runner_training.py> was submitted from host <eu-login-38> by user <saethrej> in cluster <euler> at Thu May 19 16:30:24 2022
+Job was executed on host(s) <eu-lo-s4-043>, in queue <gpu.4h>, as user <saethrej> in cluster <euler> at Thu May 19 16:31:00 2022
+</cluster/home/saethrej> was used as the home directory.
+</cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation> was used as the working directory.
+Started at Thu May 19 16:31:00 2022
+Terminated at Thu May 19 16:40:56 2022
+Results reported at Thu May 19 16:40:56 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+python runner_training.py
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   172.07 sec.
+    Max Memory :                                 6934 MB
+    Average Memory :                             3349.23 MB
+    Total Requested Memory :                     8000.00 MB
+    Delta Memory :                               1066.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                18
+    Run time :                                   620 sec.
+    Turnaround time :                            632 sec.
+
+The output (if any) follows:
+
+[ initialization @ 16:31:20]: Loaded default configuration.
+[ initialization @ 16:31:20]: Run ID: run_2022-05-19_16-31-20.
+[ initialization @ 16:31:20]: Output Directory: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-19_16-31-20.
+[ initialization @ 16:31:20]: Loaded dataset configuration.
+[runner_training @ 16:31:21]: Using device: cuda:0
+[        commaAI @ 16:35:50]: train set has 1206 samples.
+[        commaAI @ 16:35:50]: 1.9.1+cu111
+[        commaAI @ 16:37:24]: val set has 409 samples.
+[        commaAI @ 16:37:24]: 1.9.1+cu111
+[runner_training @ 16:37:24]: Initialized dataloader.
+[runner_training @ 16:37:37]: Built model. Starting training loop.
+[runner_training @ 16:37:37]: Starting epoch 1/10.
+  0%|          | 0/76 [00:00<?, ?it/s][        commaAI @ 16:37:37]: Read video with idx 320 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:38]: Read video with idx 739 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:38]: Read video with idx 124 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:38]: Read video with idx 805 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:38]: Read video with idx 483 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:39]: Read video with idx 557 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:39]: Read video with idx 991 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:39]: Read video with idx 774 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:40]: Read video with idx 113 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:40]: Read video with idx 342 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:41]: Read video with idx 906 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:41]: Read video with idx 164 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:41]: Read video with idx 32 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:42]: Read video with idx 477 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:42]: Read video with idx 404 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:43]: Read video with idx 579 and length torch.Size([40, 118, 290, 3]).
+  1%|▏         | 1/76 [00:07<09:22,  7.49s/it][        commaAI @ 16:37:45]: Read video with idx 617 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:45]: Read video with idx 461 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:45]: Read video with idx 504 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:46]: Read video with idx 554 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:46]: Read video with idx 616 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:46]: Read video with idx 612 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:47]: Read video with idx 869 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:47]: Read video with idx 451 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:48]: Read video with idx 266 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:48]: Read video with idx 379 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:48]: Read video with idx 841 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:49]: Read video with idx 1205 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:49]: Read video with idx 1138 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:49]: Read video with idx 370 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:50]: Read video with idx 773 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:50]: Read video with idx 771 and length torch.Size([40, 118, 290, 3]).
+  3%|▎         | 2/76 [00:13<08:15,  6.69s/it][        commaAI @ 16:37:51]: Read video with idx 345 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:51]: Read video with idx 1175 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:52]: Read video with idx 760 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:52]: Read video with idx 961 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:52]: Read video with idx 65 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:53]: Read video with idx 866 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:53]: Read video with idx 1050 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:54]: Read video with idx 917 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:54]: Read video with idx 602 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:54]: Read video with idx 239 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:55]: Read video with idx 1200 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:55]: Read video with idx 432 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:55]: Read video with idx 1114 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:55]: Read video with idx 1088 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:56]: Read video with idx 90 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:56]: Read video with idx 540 and length torch.Size([40, 118, 290, 3]).
+  4%|▍         | 3/76 [00:19<07:46,  6.39s/it][        commaAI @ 16:37:57]: Read video with idx 862 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:57]: Read video with idx 192 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:58]: Read video with idx 1144 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:58]: Read video with idx 316 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:58]: Read video with idx 952 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:59]: Read video with idx 960 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:59]: Read video with idx 464 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:37:59]: Read video with idx 1132 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:00]: Read video with idx 1117 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:00]: Read video with idx 893 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:01]: Read video with idx 357 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:01]: Read video with idx 764 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:01]: Read video with idx 562 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:01]: Read video with idx 443 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:02]: Read video with idx 876 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:02]: Read video with idx 1010 and length torch.Size([40, 118, 290, 3]).
+  5%|▌         | 4/76 [00:25<07:35,  6.32s/it][        commaAI @ 16:38:03]: Read video with idx 338 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:03]: Read video with idx 777 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:04]: Read video with idx 635 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:04]: Read video with idx 1045 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:05]: Read video with idx 12 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:05]: Read video with idx 715 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:06]: Read video with idx 704 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:06]: Read video with idx 309 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:06]: Read video with idx 684 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:06]: Read video with idx 980 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:07]: Read video with idx 706 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:07]: Read video with idx 156 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:08]: Read video with idx 25 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:08]: Read video with idx 188 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:08]: Read video with idx 971 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:09]: Read video with idx 916 and length torch.Size([40, 118, 290, 3]).
+  7%|▋         | 5/76 [00:32<07:33,  6.39s/it][        commaAI @ 16:38:10]: Read video with idx 664 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:10]: Read video with idx 485 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:10]: Read video with idx 642 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:11]: Read video with idx 780 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:11]: Read video with idx 544 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:11]: Read video with idx 429 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:12]: Read video with idx 719 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:12]: Read video with idx 139 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:13]: Read video with idx 1077 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:13]: Read video with idx 1037 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:14]: Read video with idx 217 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:14]: Read video with idx 923 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:14]: Read video with idx 223 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:15]: Read video with idx 107 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:15]: Read video with idx 671 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:16]: Read video with idx 234 and length torch.Size([40, 118, 290, 3]).
+  8%|▊         | 6/76 [00:39<07:36,  6.53s/it][        commaAI @ 16:38:16]: Read video with idx 1011 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:17]: Read video with idx 836 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:17]: Read video with idx 106 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:18]: Read video with idx 434 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:18]: Read video with idx 291 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:18]: Read video with idx 1202 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:19]: Read video with idx 474 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:19]: Read video with idx 409 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:19]: Read video with idx 541 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:20]: Read video with idx 1007 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:20]: Read video with idx 1014 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:20]: Read video with idx 1038 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:21]: Read video with idx 62 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:21]: Read video with idx 722 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:22]: Read video with idx 181 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:22]: Read video with idx 598 and length torch.Size([40, 118, 290, 3]).
+  9%|▉         | 7/76 [00:45<07:30,  6.52s/it][        commaAI @ 16:38:23]: Read video with idx 892 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:23]: Read video with idx 377 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:24]: Read video with idx 929 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:24]: Read video with idx 128 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:24]: Read video with idx 330 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:25]: Read video with idx 1129 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:25]: Read video with idx 534 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:26]: Read video with idx 264 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:26]: Read video with idx 668 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:26]: Read video with idx 119 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:27]: Read video with idx 567 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:27]: Read video with idx 987 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:27]: Read video with idx 645 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:28]: Read video with idx 676 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:28]: Read video with idx 1106 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:29]: Read video with idx 15 and length torch.Size([40, 118, 290, 3]).
+ 11%|█         | 8/76 [00:52<07:19,  6.47s/it][        commaAI @ 16:38:29]: Read video with idx 121 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:29]: Read video with idx 403 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:30]: Read video with idx 1080 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:30]: Read video with idx 913 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:30]: Read video with idx 1107 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:31]: Read video with idx 831 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:31]: Read video with idx 533 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:31]: Read video with idx 1025 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:32]: Read video with idx 937 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:32]: Read video with idx 912 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:32]: Read video with idx 763 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:33]: Read video with idx 965 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:33]: Read video with idx 170 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:33]: Read video with idx 243 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:34]: Read video with idx 1061 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:34]: Read video with idx 914 and length torch.Size([40, 118, 290, 3]).
+ 12%|█▏        | 9/76 [00:57<06:57,  6.23s/it][        commaAI @ 16:38:35]: Read video with idx 915 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:36]: Read video with idx 729 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:36]: Read video with idx 738 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:37]: Read video with idx 328 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:37]: Read video with idx 373 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:37]: Read video with idx 503 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:38]: Read video with idx 297 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:38]: Read video with idx 978 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:39]: Read video with idx 673 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:39]: Read video with idx 341 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:39]: Read video with idx 834 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:40]: Read video with idx 711 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:40]: Read video with idx 112 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:41]: Read video with idx 38 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:41]: Read video with idx 48 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:41]: Read video with idx 133 and length torch.Size([40, 118, 290, 3]).
+ 13%|█▎        | 10/76 [01:04<07:11,  6.54s/it][        commaAI @ 16:38:42]: Read video with idx 838 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:42]: Read video with idx 853 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:43]: Read video with idx 53 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:43]: Read video with idx 1046 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:43]: Read video with idx 905 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:44]: Read video with idx 850 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:44]: Read video with idx 1177 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:44]: Read video with idx 901 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:45]: Read video with idx 979 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:45]: Read video with idx 750 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:46]: Read video with idx 449 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:46]: Read video with idx 840 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:46]: Read video with idx 1067 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:47]: Read video with idx 175 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:47]: Read video with idx 1178 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:47]: Read video with idx 908 and length torch.Size([40, 118, 290, 3]).
+ 14%|█▍        | 11/76 [01:12<07:17,  6.73s/it][        commaAI @ 16:38:49]: Read video with idx 129 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:50]: Read video with idx 575 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:50]: Read video with idx 518 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:51]: Read video with idx 756 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:51]: Read video with idx 36 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:51]: Read video with idx 369 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:51]: Read video with idx 649 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:52]: Read video with idx 545 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:52]: Read video with idx 221 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:53]: Read video with idx 348 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:53]: Read video with idx 747 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:53]: Read video with idx 1086 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:54]: Read video with idx 528 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:54]: Read video with idx 578 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:55]: Read video with idx 1130 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:55]: Read video with idx 109 and length torch.Size([40, 118, 290, 3]).
+ 16%|█▌        | 12/76 [01:18<07:04,  6.63s/it][        commaAI @ 16:38:56]: Read video with idx 337 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:56]: Read video with idx 352 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:57]: Read video with idx 132 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:57]: Read video with idx 398 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:57]: Read video with idx 743 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:58]: Read video with idx 1051 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:58]: Read video with idx 385 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:59]: Read video with idx 410 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:59]: Read video with idx 1166 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:59]: Read video with idx 731 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:38:59]: Read video with idx 202 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:00]: Read video with idx 985 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:00]: Read video with idx 7 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:01]: Read video with idx 1141 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:01]: Read video with idx 425 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:01]: Read video with idx 982 and length torch.Size([40, 118, 290, 3]).
+ 17%|█▋        | 13/76 [01:24<06:48,  6.48s/it][        commaAI @ 16:39:02]: Read video with idx 1071 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:02]: Read video with idx 413 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:03]: Read video with idx 214 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:03]: Read video with idx 753 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:03]: Read video with idx 692 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:04]: Read video with idx 553 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:04]: Read video with idx 674 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:04]: Read video with idx 125 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:05]: Read video with idx 975 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:05]: Read video with idx 881 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:06]: Read video with idx 134 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:06]: Read video with idx 469 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:06]: Read video with idx 43 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:07]: Read video with idx 1162 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:07]: Read video with idx 173 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:08]: Read video with idx 1052 and length torch.Size([40, 118, 290, 3]).
+ 18%|█▊        | 14/76 [01:31<06:40,  6.47s/it][        commaAI @ 16:39:08]: Read video with idx 1148 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:09]: Read video with idx 1112 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:09]: Read video with idx 180 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:09]: Read video with idx 92 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:10]: Read video with idx 525 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:10]: Read video with idx 1072 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:11]: Read video with idx 135 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:11]: Read video with idx 498 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:11]: Read video with idx 158 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:12]: Read video with idx 396 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:12]: Read video with idx 522 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:13]: Read video with idx 1079 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:13]: Read video with idx 79 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:14]: Read video with idx 22 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:14]: Read video with idx 713 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:14]: Read video with idx 40 and length torch.Size([40, 118, 290, 3]).
+ 20%|█▉        | 15/76 [01:37<06:42,  6.59s/it][        commaAI @ 16:39:15]: Read video with idx 463 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:16]: Read video with idx 466 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:16]: Read video with idx 524 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:16]: Read video with idx 721 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:17]: Read video with idx 67 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:17]: Read video with idx 1068 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:17]: Read video with idx 165 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:18]: Read video with idx 911 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:18]: Read video with idx 488 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:19]: Read video with idx 16 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:19]: Read video with idx 769 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:20]: Read video with idx 967 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:20]: Read video with idx 499 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:21]: Read video with idx 397 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:21]: Read video with idx 152 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:22]: Read video with idx 272 and length torch.Size([40, 118, 290, 3]).
+ 21%|██        | 16/76 [01:45<06:45,  6.76s/it][        commaAI @ 16:39:22]: Read video with idx 1176 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:23]: Read video with idx 933 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:23]: Read video with idx 185 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:23]: Read video with idx 190 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:24]: Read video with idx 896 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:24]: Read video with idx 402 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:25]: Read video with idx 420 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:25]: Read video with idx 983 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:26]: Read video with idx 973 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:26]: Read video with idx 716 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:27]: Read video with idx 306 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:27]: Read video with idx 326 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:27]: Read video with idx 723 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:28]: Read video with idx 888 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:28]: Read video with idx 157 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:29]: Read video with idx 252 and length torch.Size([40, 118, 290, 3]).
+ 22%|██▏       | 17/76 [01:52<06:45,  6.86s/it][        commaAI @ 16:39:29]: Read video with idx 928 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:30]: Read video with idx 507 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:30]: Read video with idx 508 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:31]: Read video with idx 712 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:31]: Read video with idx 215 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:31]: Read video with idx 150 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:32]: Read video with idx 294 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:32]: Read video with idx 691 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:32]: Read video with idx 86 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:33]: Read video with idx 105 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:33]: Read video with idx 677 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:34]: Read video with idx 54 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:34]: Read video with idx 932 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:34]: Read video with idx 941 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:34]: Read video with idx 490 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:35]: Read video with idx 505 and length torch.Size([40, 118, 290, 3]).
+ 24%|██▎       | 18/76 [01:58<06:22,  6.60s/it][        commaAI @ 16:39:35]: Read video with idx 89 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:36]: Read video with idx 782 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:36]: Read video with idx 325 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:36]: Read video with idx 696 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:37]: Read video with idx 81 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:37]: Read video with idx 632 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:38]: Read video with idx 938 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:38]: Read video with idx 809 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:38]: Read video with idx 104 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:38]: Read video with idx 88 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:39]: Read video with idx 806 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:39]: Read video with idx 603 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:39]: Read video with idx 752 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:40]: Read video with idx 611 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:40]: Read video with idx 1142 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:40]: Read video with idx 646 and length torch.Size([40, 118, 290, 3]).
+ 25%|██▌       | 19/76 [02:03<05:59,  6.31s/it][        commaAI @ 16:39:41]: Read video with idx 765 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:41]: Read video with idx 926 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:41]: Read video with idx 757 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:42]: Read video with idx 844 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:42]: Read video with idx 427 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:42]: Read video with idx 57 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:43]: Read video with idx 907 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:43]: Read video with idx 14 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:44]: Read video with idx 196 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:44]: Read video with idx 1035 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:44]: Read video with idx 382 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:45]: Read video with idx 177 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:45]: Read video with idx 709 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:45]: Read video with idx 693 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:46]: Read video with idx 60 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:46]: Read video with idx 558 and length torch.Size([40, 118, 290, 3]).
+ 26%|██▋       | 20/76 [02:09<05:43,  6.14s/it][        commaAI @ 16:39:47]: Read video with idx 689 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:47]: Read video with idx 887 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:48]: Read video with idx 920 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:48]: Read video with idx 536 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:49]: Read video with idx 538 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:49]: Read video with idx 999 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:49]: Read video with idx 260 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:49]: Read video with idx 940 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:50]: Read video with idx 597 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:50]: Read video with idx 680 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:51]: Read video with idx 1161 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:51]: Read video with idx 456 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:51]: Read video with idx 392 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:52]: Read video with idx 678 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:52]: Read video with idx 513 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:52]: Read video with idx 1063 and length torch.Size([40, 118, 290, 3]).
+ 28%|██▊       | 21/76 [02:16<05:57,  6.51s/it][        commaAI @ 16:39:54]: Read video with idx 1187 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:54]: Read video with idx 610 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:55]: Read video with idx 605 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:55]: Read video with idx 187 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:55]: Read video with idx 1044 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:56]: Read video with idx 813 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:56]: Read video with idx 972 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:56]: Read video with idx 408 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:57]: Read video with idx 1173 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:57]: Read video with idx 415 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:57]: Read video with idx 444 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:58]: Read video with idx 583 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:58]: Read video with idx 1098 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:58]: Read video with idx 652 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:59]: Read video with idx 245 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:39:59]: Read video with idx 199 and length torch.Size([40, 118, 290, 3]).
+ 29%|██▉       | 22/76 [02:22<05:39,  6.29s/it][        commaAI @ 16:40:00]: Read video with idx 1066 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:00]: Read video with idx 1198 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:01]: Read video with idx 253 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:01]: Read video with idx 555 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:01]: Read video with idx 768 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:02]: Read video with idx 506 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:02]: Read video with idx 596 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:02]: Read video with idx 848 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:03]: Read video with idx 858 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:03]: Read video with idx 639 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:03]: Read video with idx 1150 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:04]: Read video with idx 399 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:04]: Read video with idx 942 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:04]: Read video with idx 725 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:05]: Read video with idx 381 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:05]: Read video with idx 543 and length torch.Size([40, 118, 290, 3]).
+ 30%|███       | 23/76 [02:28<05:27,  6.18s/it][        commaAI @ 16:40:06]: Read video with idx 302 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:06]: Read video with idx 367 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:07]: Read video with idx 445 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:07]: Read video with idx 925 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:07]: Read video with idx 909 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:07]: Read video with idx 628 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:08]: Read video with idx 986 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:08]: Read video with idx 475 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:08]: Read video with idx 61 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:09]: Read video with idx 327 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:09]: Read video with idx 754 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:09]: Read video with idx 626 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:10]: Read video with idx 974 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:10]: Read video with idx 273 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:10]: Read video with idx 1056 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:11]: Read video with idx 815 and length torch.Size([40, 118, 290, 3]).
+ 32%|███▏      | 24/76 [02:34<05:13,  6.03s/it][        commaAI @ 16:40:12]: Read video with idx 816 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:12]: Read video with idx 401 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:12]: Read video with idx 640 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:13]: Read video with idx 240 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:13]: Read video with idx 1116 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:13]: Read video with idx 440 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:14]: Read video with idx 117 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:14]: Read video with idx 919 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:15]: Read video with idx 1023 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:15]: Read video with idx 465 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:15]: Read video with idx 641 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:16]: Read video with idx 268 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:16]: Read video with idx 1022 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:17]: Read video with idx 203 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:17]: Read video with idx 902 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:17]: Read video with idx 804 and length torch.Size([40, 118, 290, 3]).
+ 33%|███▎      | 25/76 [02:40<05:12,  6.14s/it][        commaAI @ 16:40:18]: Read video with idx 758 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:18]: Read video with idx 11 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:18]: Read video with idx 257 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:19]: Read video with idx 1127 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:19]: Read video with idx 279 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:20]: Read video with idx 622 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:20]: Read video with idx 521 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:21]: Read video with idx 1019 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:21]: Read video with idx 315 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:22]: Read video with idx 631 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:22]: Read video with idx 854 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:22]: Read video with idx 1139 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:22]: Read video with idx 945 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:23]: Read video with idx 718 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:23]: Read video with idx 679 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:23]: Read video with idx 1189 and length torch.Size([40, 118, 290, 3]).
+ 34%|███▍      | 26/76 [02:46<05:06,  6.14s/it][        commaAI @ 16:40:24]: Read video with idx 659 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:24]: Read video with idx 1008 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:25]: Read video with idx 515 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:25]: Read video with idx 417 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:25]: Read video with idx 1096 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:26]: Read video with idx 405 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:26]: Read video with idx 629 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:27]: Read video with idx 186 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:27]: Read video with idx 1100 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:27]: Read video with idx 1118 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:28]: Read video with idx 275 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:28]: Read video with idx 249 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:28]: Read video with idx 599 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:29]: Read video with idx 206 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:29]: Read video with idx 208 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:30]: Read video with idx 875 and length torch.Size([40, 118, 290, 3]).
+ 36%|███▌      | 27/76 [02:53<05:05,  6.24s/it][        commaAI @ 16:40:30]: Read video with idx 28 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:31]: Read video with idx 435 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:31]: Read video with idx 225 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:31]: Read video with idx 340 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:32]: Read video with idx 198 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:32]: Read video with idx 1075 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:32]: Read video with idx 407 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:33]: Read video with idx 344 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:33]: Read video with idx 720 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:34]: Read video with idx 922 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:34]: Read video with idx 636 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:34]: Read video with idx 322 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:35]: Read video with idx 735 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:35]: Read video with idx 436 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:35]: Read video with idx 793 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:36]: Read video with idx 1109 and length torch.Size([40, 118, 290, 3]).
+ 37%|███▋      | 28/76 [02:59<04:52,  6.10s/it][        commaAI @ 16:40:36]: Read video with idx 171 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:37]: Read video with idx 1183 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:37]: Read video with idx 1137 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:37]: Read video with idx 657 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:38]: Read video with idx 71 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:38]: Read video with idx 686 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:39]: Read video with idx 526 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:39]: Read video with idx 737 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:39]: Read video with idx 149 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:40]: Read video with idx 290 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:40]: Read video with idx 391 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:40]: Read video with idx 1043 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:40]: Read video with idx 458 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:41]: Read video with idx 237 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:41]: Read video with idx 556 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:42]: Read video with idx 687 and length torch.Size([40, 118, 290, 3]).
+ 38%|███▊      | 29/76 [03:05<04:44,  6.06s/it][        commaAI @ 16:40:42]: Read video with idx 957 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:42]: Read video with idx 376 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:43]: Read video with idx 6 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:43]: Read video with idx 380 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:43]: Read video with idx 1131 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:44]: Read video with idx 550 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:44]: Read video with idx 1047 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:44]: Read video with idx 1147 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:45]: Read video with idx 918 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:45]: Read video with idx 564 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:46]: Read video with idx 372 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:46]: Read video with idx 697 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:46]: Read video with idx 282 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:47]: Read video with idx 114 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:47]: Read video with idx 798 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:47]: Read video with idx 110 and length torch.Size([40, 118, 290, 3]).
+ 39%|███▉      | 30/76 [03:10<04:33,  5.95s/it][        commaAI @ 16:40:48]: Read video with idx 984 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:48]: Read video with idx 26 and length torch.Size([1, 118, 290, 3]).
+[        commaAI @ 16:40:48]: Read video with idx 514 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:49]: Read video with idx 131 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:49]: Read video with idx 478 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:50]: Read video with idx 707 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:50]: Read video with idx 762 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:51]: Read video with idx 950 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:51]: Read video with idx 355 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:51]: Read video with idx 97 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:52]: Read video with idx 99 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:52]: Read video with idx 1040 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:53]: Read video with idx 670 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:53]: Read video with idx 759 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:53]: Read video with idx 519 and length torch.Size([40, 118, 290, 3]).
+[        commaAI @ 16:40:54]: Read video with idx 899 and length torch.Size([40, 118, 290, 3]).
+ 39%|███▉      | 30/76 [03:16<05:02,  6.57s/it]
+loss: 616.627380  [    0/ 1206]
+loss: 415.848236  [  160/ 1206]
+loss: 102.772522  [  320/ 1206]
+Traceback (most recent call last):
+  File "runner_training.py", line 53, in <module>
+    train_loop(dataloaders['train'], model, loss_fn, optimizer, device)
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/train_loop.py", line 6, in train_loop
+    for batch, (X, y) in enumerate(tqdm(dataloader)):
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/tqdm/std.py", line 1180, in __iter__
+    for obj in iterable:
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/dataloader.py", line 561, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 47, in fetch
+    return self.collate_fn(data)
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/collate.py", line 84, in default_collate
+    return [default_collate(samples) for samples in transposed]
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/collate.py", line 84, in <listcomp>
+    return [default_collate(samples) for samples in transposed]
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/collate.py", line 56, in default_collate
+    return torch.stack(batch, 0, out=out)
+RuntimeError: stack expects each tensor to be equal size, but got [40, 3, 118, 290] at entry 0 and [1, 3, 118, 290] at entry 1

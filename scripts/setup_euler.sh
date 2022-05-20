@@ -24,6 +24,10 @@ git status
 tput setaf 2
 echo "======================================================================"
 
+# activate 3d-vision virtual environment
+source 3d_env/bin/activate
+echo "[EULER STEUP] activated Python virtual environment."
+
 # exit and reset color mode back to default
 echo "[EULER SETUP] setup complete"
 tput sgr0

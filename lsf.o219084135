@@ -1,0 +1,56 @@
+Sender: LSF System <lsfadmin@eu-lo-s4-043>
+Subject: Job 219084135: <python runner_training.py> in cluster <euler> Exited
+
+Job <python runner_training.py> was submitted from host <eu-login-38> by user <saethrej> in cluster <euler> at Thu May 19 16:30:25 2022
+Job was executed on host(s) <eu-lo-s4-043>, in queue <gpu.4h>, as user <saethrej> in cluster <euler> at Thu May 19 16:41:16 2022
+</cluster/home/saethrej> was used as the home directory.
+</cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation> was used as the working directory.
+Started at Thu May 19 16:41:16 2022
+Terminated at Thu May 19 16:41:32 2022
+Results reported at Thu May 19 16:41:32 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+python runner_training.py
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   4.17 sec.
+    Max Memory :                                 305 MB
+    Average Memory :                             257.00 MB
+    Total Requested Memory :                     8000.00 MB
+    Delta Memory :                               7695.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                4
+    Run time :                                   35 sec.
+    Turnaround time :                            667 sec.
+
+The output (if any) follows:
+
+[ initialization @ 16:41:31]: Loaded default configuration.
+[ initialization @ 16:41:31]: Run ID: run_2022-05-19_16-41-31.
+[ initialization @ 16:41:31]: Output Directory: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-19_16-41-31.
+[ initialization @ 16:41:31]: Loaded dataset configuration.
+[runner_training @ 16:41:31]: Using device: cuda:0
+[        commaAI @ 16:41:31]: train set has 1206 samples.
+[        commaAI @ 16:41:31]: 1.9.1+cu111
+Traceback (most recent call last):
+  File "runner_training.py", line 38, in <module>
+    dataloaders = train_dataloader(config)
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/data_loader/default.py", line 16, in train_dataloader
+    video_dataset = {x: get_video_dataset(config=config, mode=x, frame_transfroms=data_transforms) for x in ['train', 'val']}
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/data_loader/default.py", line 16, in <dictcomp>
+    video_dataset = {x: get_video_dataset(config=config, mode=x, frame_transfroms=data_transforms) for x in ['train', 'val']}
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/data_loader/datasets/runner_datasets.py", line 9, in get_video_dataset
+    video_dataset = CommaAI(config=config, mode=mode, frame_transform=frame_transfroms, video_transform=video_transforms)
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/data_loader/datasets/commaAI.py", line 33, in __init__
+    self.__compute_mapping(config)
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/data_loader/datasets/commaAI.py", line 85, in __compute_mapping
+    self.sample_paths = pickle.load(train_file)['sample_paths']
+UnboundLocalError: local variable 'train_file' referenced before assignment

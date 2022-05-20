@@ -4,7 +4,7 @@ data/comma2k19/*
 
 # Local stuff
 *.local
-
+3d_env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,5 +1,6 @@
 import logging as log
 import os
+import pickle
 import math
 from random import sample
 import torch
@@ -31,6 +32,8 @@ class CommaAI(torch.utils.data.Dataset):
         self.num_samples = 0
         self.__compute_mapping(config)
 
+        log.info(torch.__version__)
+
 
     def __len__(self):
         ''' returns the number of samples in the dataset'''
@@ -50,7 +53,7 @@ class CommaAI(torch.utils.data.Dataset):
             end_pts=offset + self.sample_length/25 + 1, 
             pts_unit="sec"
         )[0][:self.sample_length].float()
-        log.debug("Read video with idx {}.".format(idx))
+        log.debug("Read video with idx {} and length {}.".format(idx, video_frames.shape))
 
         # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
         video_frames = np.transpose(video_frames, (0, 3, 1, 2))
@@ -67,28 +70,55 @@ class CommaAI(torch.utils.data.Dataset):
 
     def __compute_mapping(self, config):
         ''' computes a mapping from index to the path to the corresponding sample'''
+        skip = False
         if self.mode == "train":
-            temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.train]
+            if os.path.exists(config.dataset_config.mapping.train):
+                train_file = open(config.dataset_config.mapping.train, "rb")
+                self.sample_paths = pickle.load(train_file)['sample_paths']
+                self.num_samples = len(self.sample_paths)
+                skip = True
+                train_file.close()
+
         elif self.mode == "val":
-            temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.val]
+            if os.path.exists(config.dataset_config.mapping.val):
+                val_file = open(config.dataset_config.mapping.val, "rb")
+                self.sample_paths = pickle.load(val_file)['sample_paths']
+                self.num_samples = len(self.sample_paths)
+                skip = True
+                val_file.close()
         
-        # walk through all training samples and record their paths
-        sample_count = 0
-        sample_list = []
-        for dir in temp_dirs:
-            for root, subfolders, files in os.walk(dir):
-                # skip all directories that do not contain a video and speed values
-                if not ("video.mp4" in files and "speeds.npy" in files):
-                    continue
-                
-                # add root to sample list and increase counter
-                sample_list.append(root)
-                sample_count += 1
-        
-        # sort the samples by their path for (perhaps) faster access
-        sample_list.sort()
-        self.sample_paths = sample_list
-        self.num_samples = sample_count
+        if not skip:
+            if self.mode == "train":
+                temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.train]
+            elif self.mode == "val":
+                temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.val]
+
+            # walk through all training samples and record their paths
+            sample_count = 0
+            sample_list = []
+            for dir in temp_dirs:
+                for root, subfolders, files in os.walk(dir):
+                    # skip all directories that do not contain a video and speed values
+                    if not ("video.mp4" in files and "speeds.npy" in files):
+                        continue
+                    
+                    # add root to sample list and increase counter
+                    sample_list.append(root)
+                    sample_count += 1
+            
+            # sort the samples by their path for (perhaps) faster access
+            sample_list.sort()
+            self.sample_paths = sample_list
+            self.num_samples = sample_count
+
+            # dump to disk
+            dict_to_dump = {"sample_paths": self.sample_paths}
+            out_file = open(
+                config.dataset_config.mapping.train if self.mode == "train" else config.dataset_config.mapping.val,
+                "wb"
+            )
+            pickle.dump(dict_to_dump, out_file)
+            out_file.close()
 
         log.info("{} set has {} samples.".format(self.mode, self.num_samples))
 

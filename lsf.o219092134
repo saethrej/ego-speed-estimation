@@ -1,0 +1,69 @@
+Sender: LSF System <lsfadmin@eu-lo-s4-042>
+Subject: Job 219092134: <python runner_training.py> in cluster <euler> Exited
+
+Job <python runner_training.py> was submitted from host <eu-login-16> by user <saethrej> in cluster <euler> at Thu May 19 17:56:18 2022
+Job was executed on host(s) <eu-lo-s4-042>, in queue <gpu.4h>, as user <saethrej> in cluster <euler> at Thu May 19 17:56:31 2022
+</cluster/home/saethrej> was used as the home directory.
+</cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation> was used as the working directory.
+Started at Thu May 19 17:56:31 2022
+Terminated at Thu May 19 17:57:27 2022
+Results reported at Thu May 19 17:57:27 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+python runner_training.py
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   30.36 sec.
+    Max Memory :                                 3790 MB
+    Average Memory :                             2679.75 MB
+    Total Requested Memory :                     8000.00 MB
+    Delta Memory :                               4210.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                18
+    Run time :                                   80 sec.
+    Turnaround time :                            69 sec.
+
+The output (if any) follows:
+
+[ initialization @ 17:56:50]: Loaded default configuration.
+[ initialization @ 17:56:50]: Run ID: run_2022-05-19_17-56-50.
+[ initialization @ 17:56:50]: Output Directory: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-19_17-56-50.
+[ initialization @ 17:56:50]: Loaded dataset configuration.
+[runner_training @ 17:56:50]: Using device: cuda:0
+[        commaAI @ 17:56:50]: train set has 1206 samples.
+[        commaAI @ 17:56:50]: 1.9.1+cu111
+[        commaAI @ 17:56:50]: val set has 409 samples.
+[        commaAI @ 17:56:50]: 1.9.1+cu111
+[runner_training @ 17:56:50]: Initialized dataloader.
+[runner_training @ 17:56:55]: Built model. Starting training loop.
+[runner_training @ 17:56:55]: Starting epoch 1/10.
+  0%|          | 0/76 [00:00<?, ?it/s]  1%|▏         | 1/76 [00:07<08:57,  7.17s/it]  3%|▎         | 2/76 [00:12<07:49,  6.35s/it]  4%|▍         | 3/76 [00:19<07:35,  6.24s/it]  5%|▌         | 4/76 [00:24<07:00,  5.84s/it]  5%|▌         | 4/76 [00:29<08:59,  7.50s/it]
+loss: 628.181519  [    0/ 1206]
+Traceback (most recent call last):
+  File "runner_training.py", line 53, in <module>
+    train_loop(dataloaders['train'], model, loss_fn, optimizer, device)
+  File "/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/src/train_loop.py", line 6, in train_loop
+    for batch, (X, y) in enumerate(tqdm(dataloader)):
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/tqdm/std.py", line 1180, in __iter__
+    for obj in iterable:
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/dataloader.py", line 561, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/fetch.py", line 47, in fetch
+    return self.collate_fn(data)
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/collate.py", line 84, in default_collate
+    return [default_collate(samples) for samples in transposed]
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/collate.py", line 84, in <listcomp>
+    return [default_collate(samples) for samples in transposed]
+  File "/cluster/apps/nss/gcc-8.2.0/python/3.8.5/x86_64/lib64/python3.8/site-packages/torch/utils/data/_utils/collate.py", line 56, in default_collate
+    return torch.stack(batch, 0, out=out)
+RuntimeError: stack expects each tensor to be equal size, but got [40, 3, 118, 290] at entry 0 and [1, 3, 118, 290] at entry 13
