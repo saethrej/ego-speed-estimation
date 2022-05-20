@@ -17,4 +17,4 @@ def train_loop(dataloader, model, loss_fn, optimizer, device):
 
         if batch % 10 == 0:
             loss, current = loss.item(), batch * len(X)
-            print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
+            log.info(f"Batch Loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")

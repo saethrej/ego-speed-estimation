@@ -55,7 +55,7 @@ class CommaAI(torch.utils.data.Dataset):
 
         # try to fix issue where video is not as long as expected
         if video_frames.shape[0] != self.sample_length:
-            log.warning("Video read has shape {}, but required is len {}. Fetching new sample at beginning of video.".format(video_frames.shape, self.sample_length))
+            log.debug("Video read has shape {}, but required is len {}. Fetching new sample at beginning of video.".format(video_frames.shape, self.sample_length))
             offset = 0
             video_frames = torchvision.io.read_video(
                 video_path, 
@@ -68,7 +68,7 @@ class CommaAI(torch.utils.data.Dataset):
                     idx -= 1
                 else:
                     idx = len(self.sample_paths) - 1
-                log.warning("Video is faulty. Try other video with idx {}.".format(idx))
+                log.debug("Video is faulty. Try other video with idx {}.".format(idx))
                 video_path = os.path.join(self.sample_paths[idx], CommaAI.video_name)
                 speed_path = os.path.join(self.sample_paths[idx], CommaAI.speed_name)
 
@@ -80,7 +80,7 @@ class CommaAI(torch.utils.data.Dataset):
                     pts_unit="sec"
                 )[0][:self.sample_length].float()
             
-            log.info("Read new video with idx {}. New shape: {}".format(idx, video_frames.shape))
+            log.debug("Read new video with idx {}. New shape: {}".format(idx, video_frames.shape))
             
 
         # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
