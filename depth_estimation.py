@@ -20,6 +20,8 @@ print(video_frames.shape)
 
 # load the depth estimation model from github and its transforms
 midas = torch.hub.load("intel-isl/MiDaS", "DPT_Large")
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+midas.to(device)
 midas.eval()
 midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
 transform = midas_transforms.dpt_transform
@@ -35,7 +37,7 @@ start_transform = time.process_time()
 input_batch = torch.stack(
     [transform(images[i]).squeeze(0) for i in range(images.shape[0])],
     dim = 0
-)
+).to(device)
 transform_time = time.process_time() - start_transform
 print("processing took {} s".format(transform_time))
 print(input_batch.shape)
@@ -56,7 +58,7 @@ with torch.no_grad():
     inter_time = time.process_time() - start_inter
     
 
-output = prediction.numpy()
+output = prediction.cpu().numpy()
 print("output shape = ", output.shape)
 print("Prediction Time: {} s".format(pred_time))
 print("Interpolation Time: {} s".format(inter_time))
