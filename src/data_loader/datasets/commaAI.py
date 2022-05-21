@@ -83,10 +83,11 @@ class CommaAI(torch.utils.data.Dataset):
             log.debug("Read new video with idx {}. New shape: {}".format(idx, video_frames.shape))
             
 
-        # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
-        video_frames = np.transpose(video_frames, (0, 3, 1, 2))
         if self.video_transform:
             video_frames = self.video_transform(video_frames)
+
+        # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
+        video_frames = np.transpose(video_frames, (0, 3, 1, 2))
 
         # load speed data and extract same subsequence
         frame_speeds = np.load(speed_path).flatten()[offset * 25 : offset * 25 + self.sample_length]
