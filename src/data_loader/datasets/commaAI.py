@@ -13,8 +13,14 @@ class CommaAI(torch.utils.data.Dataset):
     video_name = "video_comcro.mp4"
     speed_name = "speeds.npy"
 
-    def __init__(self, config, mode, frame_transform, video_transform=None):
+    def __init__(self, config, mode, frame_transform, video_transform=None, device=None):
         super(CommaAI).__init__()
+
+        # set device used
+        if device:
+            self.device = device
+        else:
+            self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
         # save the mode (train or val)
         self.mode = mode
@@ -81,20 +87,22 @@ class CommaAI(torch.utils.data.Dataset):
                 )[0][:self.sample_length].float()
             
             log.debug("Read new video with idx {}. New shape: {}".format(idx, video_frames.shape))
-            
 
         if self.video_transform:
-            video_frames = self.video_transform(video_frames)
-
-        # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
-        video_frames = np.transpose(video_frames, (0, 3, 1, 2))
+            video_frames = self.video_transform.process(video_frames)
+            video_frames = torch.permute(video_frames, (0, 3, 1, 2))
+        else:
+            # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
+            video_frames = np.transpose(video_frames, (0, 3, 1, 2))
+        video_frames.to(self.device)
 
         # load speed data and extract same subsequence
         frame_speeds = np.load(speed_path).flatten()[offset * 25 : offset * 25 + self.sample_length]
+        frame_speeds = torch.from_numpy(frame_speeds).to(self.device).float()
         log.debug("Tensor Size Speeds = {}".format(frame_speeds.shape))
 
         # return the frames and the speeds as a tuple
-        return (video_frames, torch.from_numpy(frame_speeds).float())
+        return (video_frames, frame_speeds)
 
 
     def __compute_mapping(self, config):

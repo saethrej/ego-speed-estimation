@@ -15,10 +15,10 @@ dataloader:
 
 preprocessing:
   data_transform: 'null'
-  video_transform: 'opticalflow'
+  video_transform: 'depth_opticalflow'
 
 model:
-  model_name: 'opticalflow'
+  model_name: 'depth_opticalflow'
   num_epochs: 10
   batch_size: 8
   learning_rate: 0.001
