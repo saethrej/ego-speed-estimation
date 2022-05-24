@@ -94,11 +94,11 @@ class CommaAI(torch.utils.data.Dataset):
         else:
             # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
             video_frames = np.transpose(video_frames, (0, 3, 1, 2))
-        video_frames.to(self.device)
+        #video_frames.to(self.device)
 
         # load speed data and extract same subsequence
         frame_speeds = np.load(speed_path).flatten()[offset * 25 : offset * 25 + self.sample_length]
-        frame_speeds = torch.from_numpy(frame_speeds).to(self.device).float()
+        frame_speeds = torch.from_numpy(frame_speeds).float()#to(self.device).float()
         log.debug("Tensor Size Speeds = {}".format(frame_speeds.shape))
 
         # return the frames and the speeds as a tuple

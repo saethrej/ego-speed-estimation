@@ -9,6 +9,8 @@ def test_loop(dataloader, model, loss_fn, device):
 
     with torch.no_grad():
         for X, y in dataloader:
+            X = X.to(device)
+            y = y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
 

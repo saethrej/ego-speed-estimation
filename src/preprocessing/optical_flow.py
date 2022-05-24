@@ -25,12 +25,15 @@ class OpticalFlow():
 
 class OpticalFlowDepth():
     def __init__(self):
-        self.midas = torch.hub.load("intel-isl/MiDaS", "DPT_Large")
+        #torch.hub.set_dir("./torch_hub")
+        # self.midas = torch.hub.load("intel-isl/MiDaS", "DPT_Large")
+        self.midas = torch.hub.load("intel-isl/MiDaS", "MiDaS_small")
         self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         self.midas.to(self.device)
         self.midas.eval()
         midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
-        self.transform = midas_transforms.dpt_transform
+        # self.transform = midas_transforms.dpt_transform
+        self.transform = midas_transforms.small_transform
 
     def process(self, frames):
         np_frames = frames.numpy()
@@ -46,8 +49,8 @@ class OpticalFlowDepth():
             new_frames[i] = cv.calcOpticalFlowFarneback(prvs, next, None, 0.5, 3, 15, 3, 5, 1.2, 0)
             prvs = next
         new_frames[0] = new_frames[1] # just copy first frame
-        opt_flow = torch.tensor(new_frames).to(self.device).float()
-        gray_imgs = torch.tensor(gray_imgs).to(self.device).float()
+        opt_flow = torch.tensor(new_frames).float().to(self.device)
+        gray_imgs = torch.tensor(gray_imgs).float().to(self.device)
 
         # Depth Estimation
         input_batch = torch.stack(

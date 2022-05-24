@@ -34,6 +34,7 @@ else:
 
 device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 log.info("Using device: {}".format(device))
+torch.backends.cudnn.benchmark = True
 
 # Get dataloader
 dataloaders = train_dataloader(config)
@@ -41,6 +42,7 @@ log.info("Initialized dataloader.")
 
 # Build model
 model = build_model(config)
+model.load_state_dict(torch.load('/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-24_09-28-27/model_weights.pth'))
 model.to(device)
 model_path = os.path.join(config.paths.output_path, 'model_weights.pth')
 log.info("Built model. Starting training loop.")
