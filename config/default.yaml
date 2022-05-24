@@ -3,9 +3,11 @@ paths:
   local:
     input_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/data
     output_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/out
+    weights: define_weights_here
   euler:
     input_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/data
     output_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out
+    weights: define_weights_here
 
 seed: 12345678
 

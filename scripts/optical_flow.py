@@ -1,7 +1,9 @@
 import cv2 as cv
 import numpy as np
 
-cap = cv.VideoCapture('../data/comma2k19/Chunk_6/99c94dc769b5d96e|2018-07-09--11-25-27/10/video_comcro.mp4')
+import matplotlib.pyplot as plt
+
+cap = cv.VideoCapture('../data/comma2k19/Chunk_6/99c94dc769b5d96e|2018-07-09--11-25-27/11/video_comcro.mp4')
 
 # params for ShiTomasi corner detection
 feature_params = dict( maxCorners = 100,
@@ -17,12 +19,8 @@ color = np.random.randint(0, 255, (100, 3))
 
 # Take first frame and find corners in it
 ret, old_frame = cap.read()
-print(len(old_frame), len(old_frame[0]), len(old_frame[0][0]))
-print(old_frame)
-print(type(old_frame))
 old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
-print(old_gray)
-print(type(old_gray))
+print(old_gray.shape)
 p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 # Create a mask image for drawing purposes
 mask = np.zeros_like(old_frame)
@@ -30,7 +28,7 @@ mask = np.zeros_like(old_frame)
 hsv = np.zeros_like(old_frame)
 hsv[..., 1] = 255
 counter = 0
-while(1 and counter < 120):
+while(1 and counter < 15):
     ret, frame = cap.read()
     if not ret:
         print('No frames grabbed!')
@@ -53,22 +51,19 @@ while(1 and counter < 120):
         c, d = old.ravel()
         mask = cv.line(mask, (int(a), int(b)), (int(c), int(d)), color[i].tolist(), 2)
         frame = cv.circle(frame, (int(a), int(b)), 5, color[i].tolist(), -1)
-    img = cv.add(bgr, frame)
-    cv.imshow('frame', img)
+    cv.imshow('frame', bgr)
     cv.imshow('fram2', frame_gray)
 
     k = cv.waitKey(30) & 0xff
-    if k == 27:
-        break
-    elif k == ord('s'):
-        cv.imwrite('opticalfb.png', frame)
-        cv.imwrite('opticalhsv.png', bgr)
+    if counter == 10:
+        cv.imwrite('frame_gray.png', frame_gray)
+        cv.imwrite('opticalflow.png', bgr)
 
 
     old_gray = frame_gray.copy()
     p0 = good_new.reshape(-1, 1, 2)
     counter += 1
-cv.destroyAllWindows()
+#cv.destroyAllWindows()
 
 
 '''

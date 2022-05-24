@@ -124,13 +124,26 @@ class CommaAI(torch.utils.data.Dataset):
                 skip = True
                 val_file.close()
 
-        if not skip:
+        elif self.mode == "test":
+            if config.dataset_config.day_only:
+                this_path = config.dataset_config.mapping.test_day
+            else:
+                this_path = config.dataset_config.mapping.test
+            if os.path.exists(os.path.join(config.paths.input_path, this_path)):
+                test_file = open(os.path.join(config.paths.input_path, this_path), "rb")
+                self.sample_paths = pickle.load(test_file)['sample_paths']
+                self.num_samples = len(self.sample_paths)
+                skip = True
+                test_file.close()
+
+        if not skip or config.dataset_config.mapping.rebuild_mapping:
             log.info("Build mapping")
             if self.mode == "train":
                 temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.train]
             elif self.mode == "val":
                 temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.val]
-
+            elif self.mode == "test":
+                temp_dirs = [os.path.join(config.paths.input_path, config.dataset_config.dirs.root, d) for d in config.dataset_config.dirs.test]
             # walk through all training samples and record their paths
             sample_count = 0
             sample_list = []
@@ -139,6 +152,11 @@ class CommaAI(torch.utils.data.Dataset):
                     # skip all directories that do not contain a video and speed values
                     if not ("video.mp4" in files and "speeds.npy" in files):
                         continue
+
+                    if self.mode == "test" and config.dataset_config.day_only: 
+                        hour = int(root.split("-")[-3])
+                        if hour < 6 or hour > 20:
+                            continue
 
                     # add root to sample list and increase counter
                     sample_list.append(root)
@@ -151,8 +169,17 @@ class CommaAI(torch.utils.data.Dataset):
 
             # dump to disk
             dict_to_dump = {"sample_paths": self.sample_paths}
+            if self.mode == "train":
+                mapping_path = config.dataset_config.mapping.train
+            elif self.mode == "val":
+                mapping_path = config.dataset_config.mapping.val
+            elif self.mode == "test":
+                if config.dataset_config.day_only:
+                    mapping_path = config.dataset_config.mapping.test_day
+                else:
+                    mapping_path = config.dataset_config.mapping.test
             out_file = open(
-                os.path.join(config.paths.input_path, config.dataset_config.mapping.train) if self.mode == "train" else os.path.join(config.paths.input_path, config.dataset_config.mapping.val),
+                os.path.join(config.paths.input_path, mapping_path),
                 "wb"
             )
             pickle.dump(dict_to_dump, out_file)

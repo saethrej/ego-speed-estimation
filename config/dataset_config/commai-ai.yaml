@@ -7,7 +7,11 @@ dirs:
 video_length: 1200
 sample_length: 60
 
+day_only: false
+
 mapping:
   train: "comma2k19/mapping_train.pkl"
   val: "comma2k19/mapping_val.pkl"
   test: "comma2k19/mapping_test.pkl"
+  test_day: "comma2k19/mapping_test_day.pkl"
+  rebuild_mapping: false

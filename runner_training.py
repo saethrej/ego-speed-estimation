@@ -55,8 +55,10 @@ best_loss = float('inf')
 num_epochs = config.model.num_epochs
 
 for t in range(num_epochs):
+    model.train()
     log.info("Starting epoch {}/{}.\n".format(t+1, num_epochs) )
     train_loop(dataloaders['train'], model, loss_fn, optimizer, device)
+    model.eval()
     val_loss = test_loop(dataloaders['val'], model, loss_fn, device)
 
     # save model if it has the best validation score
