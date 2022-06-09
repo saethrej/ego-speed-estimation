@@ -15,38 +15,41 @@ from src.models.runner_models import build_model
 from src.test_loop import test_loop
 
 # initialize logging environment
-log.basicConfig(format='[%(module)15s @ %(asctime)s]: %(message)s', datefmt='%H:%M:%S', level=log.INFO)
-log.debug("Initialized logger")
+def test(args):
+    log.basicConfig(format='[%(module)15s @ %(asctime)s]: %(message)s', datefmt='%H:%M:%S', level=log.INFO)
+    log.debug("Initialized logger")
 
-# parse command line arguments to see whether run is local
-parser = argparse.ArgumentParser()
-parser.add_argument("--local", "-l", action="store_true", help="inidicate that this is a local run.")
-parser.add_argument("--weights", "-w", type=str, help="Subdirectory of out with weights that should be used.")
-args = parser.parse_args()
+    # Load config
+    if args.local:
+        log.info("This is a local run.")
+    config = init_test(args)
 
-# Load config
-if args.local:
-    log.info("This is a local run.")
-config = init_test(args)
+    # Select device and optimize
+    device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    log.info("Using device: {}".format(device))
+    torch.backends.cudnn.benchmark = True
 
-# Select device and optimize
-device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-log.info("Using device: {}".format(device))
-torch.backends.cudnn.benchmark = True
+    # Get Dataloader
+    dataloader = test_dataloader(config)
 
-# Get Dataloader
-dataloader = test_dataloader(config)
+    # Build model and load weights
+    model = build_model(config)
+    model.load_state_dict(torch.load(config.paths.weights_path))
+    model.to(device)
+    model.eval()
+    log.info("Built model. Start prediction loop.")
 
-# Build model and load weights
-model = build_model(config)
-model.load_state_dict(torch.load(config.paths.weights_path))
-model.to(device)
-model.eval()
-log.info("Built model. Start prediction loop.")
+    # Define loss metric
+    loss_fn = nn.MSELoss()
 
-# Define loss metric
-loss_fn = nn.MSELoss()
+    val_loss = test_loop(dataloader, model, loss_fn, device, True)
 
-val_loss = test_loop(dataloader, model, loss_fn, device, True)
+    log.info("Testing complete.")
 
-log.info("Testing complete.")
+if __name__ == "__main__":
+    # parse command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--local", "-l", action="store_true", help="inidicate that this is a local run.")
+    parser.add_argument("--weights", "-w", type=str, help="Subdirectory of out with weights that should be used.")
+    args = parser.parse_args()
+    test(args)

@@ -67,7 +67,7 @@ def init_test(args):
         log.info("Loading weights from input: ./out/{}/model_weights.pth".format(args.weights))
         config.paths.weights_path = "./out/" + args.weights + "/model_weights.pth"
     else:
-        log.info("Loading weights from config: {}".format(config.paths.weights))
+        log.info("Loading weights from config: {}".format(config.paths.weights_path))
 
     # Load dataset config
     config = dataset_config(config)

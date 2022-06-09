@@ -25,7 +25,7 @@ class OpticalFlow():
 
 class OpticalFlowDepth():
     def __init__(self):
-        #torch.hub.set_dir("./torch_hub")
+        torch.hub.set_dir("./torch_hub")
         # self.midas = torch.hub.load("intel-isl/MiDaS", "DPT_Large")
         self.midas = torch.hub.load("intel-isl/MiDaS", "MiDaS_small")
         self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")

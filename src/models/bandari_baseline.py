@@ -26,11 +26,12 @@ class BandariBaseline(nn.Module):
                 padding=0
             ),
             nn.BatchNorm2d(16),
+            nn.AvgPool2d(2),
             nn.ReLU()
         )
 
         self.lstm = nn.LSTM(
-            input_size=521664, # out_channels * (H-4) * (W-4)
+            input_size=130416, # out_channels * (H-4) * (W-4)
             hidden_size=256,
             num_layers=1,
             batch_first = True

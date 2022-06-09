@@ -3,11 +3,11 @@ paths:
   local:
     input_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/data
     output_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/out
-    weights: define_weights_here
+    weights_path: define_weights_here
   euler:
     input_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/data
     output_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out
-    weights: define_weights_here
+    weights_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-24_09-28-27/model_weights.pth
 
 seed: 12345678
 
@@ -21,6 +21,6 @@ preprocessing:
 
 model:
   model_name: 'depth_opticalflow'
-  num_epochs: 10
+  num_epochs: 60
   batch_size: 8
-  learning_rate: 0.001
+  learning_rate: 0.0005

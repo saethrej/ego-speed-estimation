@@ -16,6 +16,8 @@ from src.test_loop import test_loop
 from src.models.runner_models import build_model
 from src.data_loader.default import train_dataloader
 
+from runner_testing import test
+
 # initialize logging environment
 log.basicConfig(format='[%(module)15s @ %(asctime)s]: %(message)s', datefmt='%H:%M:%S', level=log.INFO)
 log.debug("Initialized logger")
@@ -23,6 +25,7 @@ log.debug("Initialized logger")
 # parse command line arguments to see whether run is local
 parser = argparse.ArgumentParser()
 parser.add_argument("--local", "-l", action="store_true", help="inidicate that this is a local run")
+parser.add_argument("--test", "-t", action="store_true", help="indicate if testing should be run after training")
 args = parser.parse_args()
 
 # Initialize training run 
@@ -42,7 +45,7 @@ log.info("Initialized dataloader.")
 
 # Build model
 model = build_model(config)
-model.load_state_dict(torch.load('/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-24_09-28-27/model_weights.pth'))
+#model.load_state_dict(torch.load('/cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-24_09-28-27/model_weights.pth'))
 model.to(device)
 model_path = os.path.join(config.paths.output_path, 'model_weights.pth')
 log.info("Built model. Starting training loop.")
@@ -68,5 +71,9 @@ for t in range(num_epochs):
         log.info("Model weights stored under {}.".format(model_path))
 
 log.info("Training complete.")
+
+if args.test:
+    args.weights = model_path.split("/")[-2]
+    test(args)
 
 
