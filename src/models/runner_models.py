@@ -2,6 +2,7 @@ import logging as log
 
 from src.models.cnn_lstm import CNNLSTM
 from src.models.bandari_baseline import BandariBaseline
+from src.models.bandari_baseline_3d_conv import BandariBaseline3DConv
 from src.models.dual_cnn_lstm import DualCnnLstm
 from src.models.dummy_model import DummyModel
 from src.models.optical_flow_dummy import OpticalFlowDummy
@@ -12,6 +13,9 @@ def build_model(config):
     if config.model.model_name == 'default':
         log.info("Loading Model: BandaraBaseline")
         model = BandariBaseline(config)
+    elif config.model.model_name == 'default_3d':
+        log.info("Loading Model: BandaraBaseline with 3D convolution")
+        model = BandariBaseline3DConv(config)
     elif config.model.model_name == 'dual-cnn-lstm':
         log.info("Loading Model: DualCnnLstm")
         model = DualCnnLstm(config)
