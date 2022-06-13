@@ -14,17 +14,24 @@ class DualCnnLstm(nn.Module):
         self.L = 0
         self.W = 0
         self.H = 0
+        self.channels_in = 3
+        if config.preprocessing.video_transform == 'depth_opticalflow':
+            self.channels_in = 4
+        elif config.preprocessing.video_transform == 'opticalflow_gray':
+            self.channels_in = 3
+        elif config.preprocessing.video_transform == 'opticalflow':
+            self.channels_in = 2
 
         # First convolution
         self.first_conv = nn.Sequential(
             nn.Conv2d(
-                in_channels = 3,
+                in_channels = self.channels_in,
                 out_channels = 16,
                 kernel_size=12,
                 stride=1,
                 padding=0
             ),
-            nn.AvgPool2d(2),
+            nn.MaxPool2d(2),
             nn.BatchNorm2d(16),
             nn.ReLU()
         )
@@ -113,7 +120,7 @@ class DualCnnLstm(nn.Module):
         log.debug("Input shape x: {}".format(x.shape))
 
         # combine batch and frame dimensions [N, L, 3, H, W] -> [N*L, 3, H, W]
-        x2 = x.view(NL, 3, self.H, self.W)
+        x2 = x.view(NL, self.channels_in, self.H, self.W)
         log.debug("Input shape of first_conv - x2: {}".format(x2.shape))
 
         # Apply first conv layer

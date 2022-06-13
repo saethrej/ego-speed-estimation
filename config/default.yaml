@@ -7,7 +7,7 @@ paths:
   euler:
     input_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/data
     output_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out
-    weights_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-05-24_09-28-27/model_weights.pth
+    weights_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-06-12_18-13-05/model_weights.pth
 
 seed: 12345678
 
@@ -20,7 +20,8 @@ preprocessing:
   video_transform: 'null'
 
 model:
-  model_name: 'default_3d'
+  model_name: 'dof_cnn'
+  settings: 'no_temp'
   num_epochs: 60
-  batch_size: 8
+  batch_size: 16
   learning_rate: 0.0005

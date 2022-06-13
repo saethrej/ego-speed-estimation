@@ -7,7 +7,8 @@ import logging as log
 class OpticalFlow():
     def __init__(self):
         self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-
+    
+    # returns 2 channels
     def process(self, frames):
         np_frames = frames.numpy()
 
@@ -19,9 +20,34 @@ class OpticalFlow():
             new_frames[i] = cv.calcOpticalFlowFarneback(prvs, next, None, 0.5, 3, 15, 3, 5, 1.2, 0)
             prvs = next
         new_frames[0] = new_frames[1] # just copy first frame
-        opt_flow = torch.tensor(new_frames).to(self.device).float()
+        opt_flow = torch.tensor(new_frames).float().to(self.device)
 
         return opt_flow
+
+class OpticalFlowGrayScale():
+    def __init__(self):
+        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    
+    # returns 3 channels
+    def process(self, frames):
+        np_frames = frames.numpy()
+
+        # Optical Flow
+        new_frames = np.empty((frames.shape[0], frames.shape[1], frames.shape[2], 2))
+        gray_imgs = np.empty((frames.shape[0], frames.shape[1], frames.shape[2]))
+        prvs = cv.cvtColor(np_frames[0], cv.COLOR_BGR2GRAY)
+        gray_imgs[0] = prvs
+        for i in range(1, frames.shape[0]):
+            next = cv.cvtColor(np_frames[i], cv.COLOR_BGR2GRAY)
+            gray_imgs[i] = next
+            new_frames[i] = cv.calcOpticalFlowFarneback(prvs, next, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+            prvs = next
+        new_frames[0] = new_frames[1] # just copy first frame
+        opt_flow = torch.tensor(new_frames).float().to(self.device)
+        gray_imgs = torch.tensor(gray_imgs).float().to(self.device)
+        return_frames = torch.cat((opt_flow, gray_imgs.unsqueeze(dim=3)), dim=3)
+
+        return return_frames
 
 class OpticalFlowDepth():
     def __init__(self):
@@ -35,6 +61,7 @@ class OpticalFlowDepth():
         # self.transform = midas_transforms.dpt_transform
         self.transform = midas_transforms.small_transform
 
+    # returns 4 channels
     def process(self, frames):
         np_frames = frames.numpy()
 

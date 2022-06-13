@@ -3,9 +3,9 @@ from torch import nn
 
 import logging as log
 
-class DOFCNN(nn.Module):
+class DOFCNNLSTM(nn.Module):
     def __init__(self, config) -> None:
-        super(DOFCNN, self).__init__()
+        super(DOFCNNLSTM, self).__init__()
 
         #store config
         self.config = config
@@ -18,9 +18,6 @@ class DOFCNN(nn.Module):
             self.channels_in = 3
         elif config.preprocessing.video_transform == 'opticalflow':
             self.channels_in = 2
-
-        self.no_temp_smoothing = (config.model.settings and config.model.settings == 'no_temp')
-        log.info("Model settings: No temporal smoothing {}".format(self.no_temp_smoothing))
 
         self.conv_1 = nn.Sequential(
             nn.Conv2d(
@@ -61,22 +58,20 @@ class DOFCNN(nn.Module):
             nn.ReLU()
         )
 
+        self.lstm = nn.LSTM(
+            input_size = 4224,
+            hidden_size = 64,
+            num_layers=1,
+            batch_first=True
+        )
+
         self.fc1 = nn.Sequential(
-            nn.Linear(4224, 64),
+            nn.Linear(64, 64),
             nn.ReLU()
         )
         self.regression = nn.Sequential(
             nn.Linear(64, 1),
             nn.ReLU()
-        )
-
-        self.final_1dconv = nn.Conv1d(
-            in_channels=1,
-            out_channels=1,
-            kernel_size=5,
-            stride=1,
-            padding='same',
-            padding_mode='replicate'
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -98,17 +93,16 @@ class DOFCNN(nn.Module):
         log.debug("Output of third conv - x4 {}".format(x4.shape))
 
 
-        # Flatten and apply linear layer
+        # Flatten and apply LSTM
         x4 = x4.reshape(self.N, self.L, -1)
-        log.debug("Input to first linear layer - x4: {}".format(x4.shape))
-        x5 = self.fc1(x4)
-        log.debug("Input to regression layer - x5: {}".format(x5.shape))
+        log.debug("Input shape of LSTM - x4: {}".format(x4.shape))
+        x5, _ = self.lstm(x4)
+        log.debug("Output of LSTM - x5: {}".format(x5.shape))
 
-        # Apply final regression layer
-        x6 = self.regression(x5)
-        log.debug("Output regression - x6: {}".format(x6.shape))
-        if self.no_temp_smoothing:
-            return x6.squeeze()
-        x7 = torch.transpose(x6, 2, 1)
-        x7 = self.final_1dconv(x7)
+        # Apply fully connected an final regression layer
+        x6 = self.fc1(x5)
+        log.debug("Output of Fully Connected Layer - x6: {}".format(x6.shape))
+        x7 = self.regression(x6)
+        log.debug("Output of regression layer - x7: {}".format(x7.shape))
+        
         return x7.squeeze()

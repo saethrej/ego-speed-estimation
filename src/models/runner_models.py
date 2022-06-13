@@ -7,6 +7,7 @@ from src.models.dual_cnn_lstm import DualCnnLstm
 from src.models.dummy_model import DummyModel
 from src.models.optical_flow_dummy import OpticalFlowDummy
 from src.models.dof_cnn import DOFCNN
+from src.models.dof_cnn_lstm import DOFCNNLSTM
 
 def build_model(config):
 
@@ -25,9 +26,12 @@ def build_model(config):
     elif config.model.model_name == 'opticalflow':
         log.info("Loading Model: OpticalFlowDummy")
         model = OpticalFlowDummy(config)
-    elif config.model.model_name == 'depth_opticalflow':
+    elif config.model.model_name == 'dof_cnn':
         log.info("Loading Model: DOFCNN")
         model = DOFCNN(config)
+    elif config.model.model_name == 'dof_cnn_lstm':
+        log.info("Loading Model: DOFCNNLSTM")
+        model = DOFCNNLSTM(config)
     else:
         raise NotImplementedError
 
