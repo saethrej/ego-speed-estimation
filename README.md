@@ -57,12 +57,14 @@ python scripts/extract_velocities.py
 The scripts will generate two files `video_comcro.mp4` and `speeds.npy` for every video sequence.
 
 ### Additional dependencies
-For depth estimation we use a model from [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) that is loaded with `torch.hub.load`. If this code is executed in an environment with restricted access to the Internet, it is not possible to load the model in this fashion. As a workaround, we manually copied the required model into a directory `/torch_hub`. Our code then automatically checks if this directory exists and, if this is the case, loads the content from there. To replicate this setup, perform the following steps:
+For depth estimation we use a [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) model loaded via `torch.hub.load`. If the codebase of our GitHub repository is executed in an environment with restricted access to the Internet, access to the `torch.hub.load` is not guaranteed. As a workaround, the required model must be manually copied into the directory `/torch_hub`. To replicate our setup, perform the following steps:
 - Execute the download script on a machine that has access to the Internet by running `python scripts/download_midas.py`
 - The model will be downloaded and cached on the machine. This is usually in the directory `~/.cache/torch/hub`
 - Create a new directory 'torch_hub' in the top level of this project on the machine with restricted access.
 - Copy the content of your local cache into this directory by e.g. using FTP
 - Rerun the script on the target machine to check if the model can be loaded correctly from the directory
+
+If the afromentioned directory exists, the model will be automatically loaded from the local folder. 
 
 ## Directory Structure
 <details><summary>Click here to show the structure of the directory.</summary>
