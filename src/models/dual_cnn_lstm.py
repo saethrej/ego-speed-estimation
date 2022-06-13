@@ -1,3 +1,9 @@
+'''
+
+Implementation of the Dual-CNN-LSTM model
+
+'''
+
 from turtle import forward
 import torch
 from torch import nn
@@ -10,10 +16,12 @@ class DualCnnLstm(nn.Module):
 
         # store config file
         self.config = config
-        self.N = 0
-        self.L = 0
+        self.N = self.config.model.batch_size
+        self.L = self.config.dataset_config.sample_length
         self.W = 0
         self.H = 0
+
+        # set number of channels according to preprocessing steps
         self.channels_in = 3
         if config.preprocessing.video_transform == 'depth_opticalflow':
             self.channels_in = 4
@@ -92,9 +100,7 @@ class DualCnnLstm(nn.Module):
         # LSTM
 
         self.lstm = nn.LSTM(
-            input_size = 16128, # 16 * ( ((118 - (12-1))/3 - 2*(24-1)) * ((290 - (12-1))/3 - 2*(24-1)) + ((118 - (12-1))/3 - 2*(12-1)) * ((290 - (12-1))/3 - 2*(12-1))
-            #input_size= 576928, # 16 * ( (118 - (12-1) - 2*(24-1)) * (290 - (12-1) - 2*(24-1)) + (118 - 3*(12-1)) * (290 - 3*(12-1))
-            #input_size= 847872, # 16 * ( (118 - (5-1) - 2*(12-1)) * (290 - (5-1) - 2*(12-1)) + (118 - (5-1) - 2*(6-1)) * (290 - (5-1) - 2*(6-1))
+            input_size = 16128,
             hidden_size=64,
             num_layers=1,
             batch_first = True

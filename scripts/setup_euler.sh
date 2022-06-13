@@ -1,3 +1,5 @@
+# Script to setup euler
+
 # switch color mode
 tput setaf 2
 

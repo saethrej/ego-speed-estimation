@@ -1,3 +1,9 @@
+'''
+
+Implementation of the Bandari CNN LSTM model
+
+'''
+
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -15,11 +21,19 @@ class BandariBaseline(nn.Module):
         self.N = self.config.model.batch_size
         self.L = self.config.dataset_config.sample_length
         
-        # define our network layer by layer
-
+        # set number of channels according to preprocessing steps
+        self.channels_in = 3
+        if config.preprocessing.video_transform == 'depth_opticalflow':
+            self.channels_in = 4
+        elif config.preprocessing.video_transform == 'opticalflow_gray':
+            self.channels_in = 3
+        elif config.preprocessing.video_transform == 'opticalflow':
+            self.channels_in = 2
+        
+        # 1 conv layer
         self.conv_layer = nn.Sequential(
             nn.Conv2d(
-                in_channels=3,
+                in_channels=self.channels_in,
                 out_channels=16,
                 kernel_size=5,
                 stride=1,
@@ -30,13 +44,15 @@ class BandariBaseline(nn.Module):
             nn.ReLU()
         )
 
+        # LSTM
         self.lstm = nn.LSTM(
-            input_size=130416, # out_channels * (H-4) * (W-4)
+            input_size=130416,
             hidden_size=256,
             num_layers=1,
             batch_first = True
         )
 
+        # FC applied on output of LSTM
         self.fc1 = nn.Linear(256, 256)
         self.regression = nn.Linear(256, 1)
 
@@ -47,7 +63,7 @@ class BandariBaseline(nn.Module):
         # combine batch and frame dimensions of 5D input tensor
         # [N,L,3,H,W] --> [N*L,3,H,W]
         NL = self.N * self.L
-        x2 = x.view(NL, 3, x.size(3), x.size(4))
+        x2 = x.view(NL, self.channels_in, x.size(3), x.size(4))
         log.debug("Input shape to conv2d() - x2: {}".format(x2.shape))
 
         # apply convolutional layer

@@ -1,3 +1,11 @@
+"""
+
+File without importance for overall project.
+Script to test depth estimations.
+
+"""
+
+
 import torch
 import torchvision
 import cv2

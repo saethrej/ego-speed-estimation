@@ -1,6 +1,11 @@
+"""
+
+This script converts all 'filename' videos found in the data directory from .hvec to .mp4
+
+"""
+
 import os 
 
-# filename = "runner_preprocessing.py" 
 filename ="video.hevc"
 outfilename = "video.mp4"
 
@@ -9,9 +14,8 @@ def main():
     for root, subFolders, files in os.walk(this_dir):
         if (not filename in files) or (outfilename in files):
             continue
-        #print("This file: " + os.path.join(root, filename))
-        #print("Output file: " + os.path.join(root, outfilename))
         os.system("ffmpeg -i '" + os.path.join(root, filename) + "' '" + os.path.join(root, outfilename) + "'")
-        #os.remove(os.path.join(root, filename))
+        # To delete original file, uncomment the following line
+        # os.remove(os.path.join(root, filename))
 
 main()

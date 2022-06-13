@@ -1,3 +1,10 @@
+"""
+
+This script extracts the speed values at each video frame and stores it in speeds.npy
+
+"""
+
+
 import os
 import math
 from posixpath import dirname

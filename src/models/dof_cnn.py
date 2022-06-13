@@ -1,3 +1,9 @@
+'''
+
+Implementation of the CNN (ours) model with optional temporal smoothing
+
+'''
+
 import torch
 from torch import nn
 
@@ -11,6 +17,8 @@ class DOFCNN(nn.Module):
         self.config = config
         self.N = self.config.model.batch_size
         self.L = self.config.dataset_config.sample_length
+
+        # set number of channels according to preprocessing steps
         self.channels_in = 3
         if config.preprocessing.video_transform == 'depth_opticalflow':
             self.channels_in = 4
@@ -19,9 +27,12 @@ class DOFCNN(nn.Module):
         elif config.preprocessing.video_transform == 'opticalflow':
             self.channels_in = 2
 
+        # Read from config if temporal smoothing (i.e. 1D conv) should be applied
         self.no_temp_smoothing = (config.model.settings and config.model.settings == 'no_temp')
-        log.info("Model settings: No temporal smoothing {}".format(self.no_temp_smoothing))
+        if self.no_temp_smoothing:
+            log.info("Model settings: No temporal smoothing")
 
+        # 3 conv layers of our CNN
         self.conv_1 = nn.Sequential(
             nn.Conv2d(
                 in_channels = self.channels_in,
@@ -61,6 +72,7 @@ class DOFCNN(nn.Module):
             nn.ReLU()
         )
 
+        # FC applied after CNN
         self.fc1 = nn.Sequential(
             nn.Linear(4224, 64),
             nn.ReLU()
@@ -70,6 +82,7 @@ class DOFCNN(nn.Module):
             nn.ReLU()
         )
 
+        # Optional temporal smoothing layer
         self.final_1dconv = nn.Conv1d(
             in_channels=1,
             out_channels=1,

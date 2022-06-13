@@ -1,3 +1,9 @@
+"""
+
+The testing script.
+
+"""
+
 import os
 import torch
 import math
@@ -24,10 +30,9 @@ def test(args):
         log.info("This is a local run.")
     config = init_test(args)
 
-    # Select device and optimize
+    # Select device
     device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     log.info("Using device: {}".format(device))
-    torch.backends.cudnn.benchmark = True
 
     # Get Dataloader
     dataloader = test_dataloader(config)
@@ -42,6 +47,7 @@ def test(args):
     # Define loss metric
     loss_fn = nn.MSELoss()
 
+    # Start test loop
     val_loss = test_loop(dataloader, model, loss_fn, device, True)
 
     log.info("Testing complete.")

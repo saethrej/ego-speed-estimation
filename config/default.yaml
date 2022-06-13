@@ -1,27 +1,53 @@
-
+# Define paths to data, output and weights
 paths:
+  # The paths defined under local are used if run with '--local' flag
   local:
-    input_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/data
-    output_path: /home/christopher/ETH/MSc_4/3DVision/code/ego-speed-estimation/out
-    weights_path: define_weights_here
+    # This path defines the location of the data set
+    input_path: /path/to/ego-speed-estimation/ego-speed-estimation/data
+    # This path defines in which directory the trained models are stored
+    output_path: /path/to/ego-speed-estimation/ego-speed-estimation/out
+    # This path defines the weights that are loaded during evaluation if manually executed without '--weights' flag
+    weights_path: /path/to/ego-speed-estimation/out/run_2022-xx-xx_xx-xx-xx/model_weights.pth
+  # The paths defined under euler are used if run without '--local' flag
   euler:
+    # This path defines the location of the data set on the euler cluster
     input_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/data
+    # This path defines in which directory the trained models are stored on the euler cluster
     output_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out
-    weights_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-06-12_18-13-05/model_weights.pth
+    # This path defines the weights that are loaded during evaluation if manually executed without '--weights' flag on the euler cluster
+    weights_path: /cluster/project/infk/courses/252-0579-00L/group10/ego-speed-estimation/out/run_2022-xx-xx_xx-xx-xx/model_weights.pth
 
+# Value used to fix the seeds
 seed: 12345678
 
+# Configuration of dataloader
 dataloader:
+  # Name of the dataset. Valid options are 'comma-ai'
   dataset_name: 'comma-ai'
-  dataloader_name: 'default'
 
+# Configuration of preprocessing steps
 preprocessing:
   data_transform: 'null'
-  video_transform: 'null'
+  # Preprocessing of raw frame inputs, i.e. frame annotations. Valid options are:
+  #     'null'              No annotations
+  #     'opticalflow'       Optical Flow
+  #     'opticalflow_gray'  Optical Flow, Grayscale
+  #     'depth_opticalflow' Optical Flow, Depth Estimation, Grayscale
+  video_transform: 'opticalflow_gray'
 
+# Configuration of the model and training
 model:
-  model_name: 'dof_cnn'
-  settings: 'no_temp'
+  # Model definition. Valid options are:
+  #     'bandari'           Bandari Baseline CNN with LSTM
+  #     'dual_cnn_lstm'     Dual CNN with LSTM
+  #     'dof_cnn'           CNN (ours) with temporal smoothing
+  #     'dof_cnn_lstm'      CNN (ours) with LSTM
+  model_name: 'dual_cnn_lstm'
+  # Defines if tempral smoothing should be applied or not. If set to 'no_temp', no temporal smoothing will be applied
+  settings: ''
+  # Number of epochs for training
   num_epochs: 60
+  # Batch size used for training
   batch_size: 16
+  # Learning rate of Adam optimizer used for training
   learning_rate: 0.0005

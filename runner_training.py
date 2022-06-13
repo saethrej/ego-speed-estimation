@@ -1,3 +1,8 @@
+"""
+
+The training script.
+
+"""
 
 import os
 import torch
@@ -35,6 +40,7 @@ if args.local:
 else:
     config = init_train()
 
+# Select device and optimize
 device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 log.info("Using device: {}".format(device))
 torch.backends.cudnn.benchmark = True
@@ -56,6 +62,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=config.model.learning_rate)
 best_loss = float('inf')
 num_epochs = config.model.num_epochs
 
+# Start training
 for t in range(num_epochs):
     model.train()
     log.info("Starting epoch {}/{}.\n".format(t+1, num_epochs) )
@@ -72,6 +79,7 @@ for t in range(num_epochs):
 log.info("Training complete.")
 
 if args.test:
+    # Initialize testing if corresponding flag is set
     args.weights = model_path.split("/")[-2]
     test(args)
 

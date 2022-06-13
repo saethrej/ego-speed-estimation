@@ -1,3 +1,9 @@
+"""
+
+Definition of test/validation loop
+
+"""
+
 
 import torch
 import logging as log
@@ -16,7 +22,7 @@ def test_loop(dataloader, model, loss_fn, device, test=False):
 
     test_loss /= size
     if test:
-        log.info(f"TEST LOSS: {test_loss:>8f} \n")
+        log.info(f"TEST LOSS (MSE): {test_loss:>8f} \n")
     else:
         log.info(f"[Validation] Avg Batch Loss: {test_loss:>8f} \n")
     return test_loss

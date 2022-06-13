@@ -1,3 +1,9 @@
+'''
+
+Implementation of the CNN (ours) LSTM model
+
+'''
+
 import torch
 from torch import nn
 
@@ -11,6 +17,8 @@ class DOFCNNLSTM(nn.Module):
         self.config = config
         self.N = self.config.model.batch_size
         self.L = self.config.dataset_config.sample_length
+
+        # set number of channels according to preprocessing steps
         self.channels_in = 3
         if config.preprocessing.video_transform == 'depth_opticalflow':
             self.channels_in = 4
@@ -19,6 +27,8 @@ class DOFCNNLSTM(nn.Module):
         elif config.preprocessing.video_transform == 'opticalflow':
             self.channels_in = 2
 
+        
+        # 3 conv layers of our CNN
         self.conv_1 = nn.Sequential(
             nn.Conv2d(
                 in_channels = self.channels_in,
@@ -58,6 +68,8 @@ class DOFCNNLSTM(nn.Module):
             nn.ReLU()
         )
 
+        # LSTM
+
         self.lstm = nn.LSTM(
             input_size = 4224,
             hidden_size = 64,
@@ -65,6 +77,7 @@ class DOFCNNLSTM(nn.Module):
             batch_first=True
         )
 
+        # FC applied on output of LSTM
         self.fc1 = nn.Sequential(
             nn.Linear(64, 64),
             nn.ReLU()

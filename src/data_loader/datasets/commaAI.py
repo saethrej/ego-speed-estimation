@@ -1,3 +1,10 @@
+"""
+
+Loading of dataset
+
+"""
+
+
 import logging as log
 import os
 import pickle
@@ -49,7 +56,7 @@ class CommaAI(torch.utils.data.Dataset):
         video_path = os.path.join(self.sample_paths[idx], CommaAI.video_name)
         speed_path = os.path.join(self.sample_paths[idx], CommaAI.speed_name)
 
-        # load video an extract a random subsequence of fixed length
+        # load video and extract a random subsequence of fixed length
         offset = np.random.randint(0, 48 - math.ceil(self.sample_length/25) - 1)
         video_frames = torchvision.io.read_video(
             video_path, 
@@ -59,8 +66,9 @@ class CommaAI(torch.utils.data.Dataset):
         )[0][:self.sample_length].float()
         log.debug("Read video with idx {} and shape {}.".format(idx, video_frames.shape))
 
-        # try to fix issue where video is not as long as expected
+        # Recover from issues during video loading, i.e. if shorter than expected or file is faulty
         if video_frames.shape[0] != self.sample_length:
+            # Frames do not have desired shape. First try to fetch from beginning of this video
             log.debug("Video read has shape {}, but required is len {}. Fetching new sample at beginning of video.".format(video_frames.shape, self.sample_length))
             offset = 0
             video_frames = torchvision.io.read_video(
@@ -70,6 +78,7 @@ class CommaAI(torch.utils.data.Dataset):
                 pts_unit="sec"
             )[0][:self.sample_length].float()
             while (video_frames.shape[0] != self.sample_length):
+                # If video frames are faulty or video is to short selected another index and sample from there until correct length
                 if(idx > 0):
                     idx -= 1
                 else:
@@ -89,16 +98,16 @@ class CommaAI(torch.utils.data.Dataset):
             log.debug("Read new video with idx {}. New shape: {}".format(idx, video_frames.shape))
 
         if self.video_transform:
+            # apply transform to it and permute axis ([L,H,W,3] -> [L,3,H,W])
             video_frames = self.video_transform.process(video_frames)
             video_frames = torch.permute(video_frames, (0, 3, 1, 2))
         else:
-            # permute axis ([L,H,W,3] -> [L,3,H,W]) and apply transform to it (if applicable)
+            # permute axis ([L,H,W,3] -> [L,3,H,W])
             video_frames = np.transpose(video_frames, (0, 3, 1, 2))
-        #video_frames.to(self.device)
 
         # load speed data and extract same subsequence
         frame_speeds = np.load(speed_path).flatten()[offset * 25 : offset * 25 + self.sample_length]
-        frame_speeds = torch.from_numpy(frame_speeds).float()#to(self.device).float()
+        frame_speeds = torch.from_numpy(frame_speeds).float()
         log.debug("Tensor Size Speeds = {}".format(frame_speeds.shape))
 
         # return the frames and the speeds as a tuple
@@ -136,6 +145,7 @@ class CommaAI(torch.utils.data.Dataset):
                 skip = True
                 test_file.close()
 
+        # Create mapping if not already existing or force argument set in config
         if not skip or config.dataset_config.mapping.rebuild_mapping:
             log.info("Build mapping")
             if self.mode == "train":
@@ -150,7 +160,7 @@ class CommaAI(torch.utils.data.Dataset):
             for dir in temp_dirs:
                 for root, subfolders, files in os.walk(dir):
                     # skip all directories that do not contain a video and speed values
-                    if not ("video.mp4" in files and "speeds.npy" in files):
+                    if not (CommaAI.video_name in files and CommaAI.speed_name in files):
                         continue
 
                     if self.mode == "test" and config.dataset_config.day_only: 

@@ -7,8 +7,12 @@ This is the repository for the [3D Vision course](http://www.cvg.ethz.ch/teachin
     - [Setting up the Repository](#setting-up-the-repository)
     - [Downloading the comma2k19 Dataset](#downloading-the-comma2k19-dataset)
     - [Pre-Processing the comma2k19 Dataset](#pre-processing-the-comma2k19-dataset)
+    - [Additional Dependencies](#additional-dependencies)
 - [Directory Structure](#directory-structure)
-- [Reproducing Results](#reproducing-results)
+- [Training and Evaluation](#training-and-evaluation)
+    - [Configuration Files](#configuration-files)
+    - [Training](#training)
+    - [Manual Evaluation](#manual-evaluation)
 - [Deliverables](#deliverables)
 - [Authors](#authors)
 
@@ -34,7 +38,7 @@ unzip Chunk_X.zip -d /path/to/ego-speed-estimation/data/comma2k19/
 ### Pre-Processing the comma2k19 Dataset 
 The videos in the comma2k19 dataset contains 2085 video sequences of 1 minute length and 1200 frames. The frame rate is thus 20 fps. The videos are stored as `.hevc` files, which cannot be read with standard libraries such as `torchvision`. Moreover, the vehicle's speed data has a higher temporal resolution than the camera's frame rate. 
 
-We thus provide two auxiliary scripts to (a) convert the input videos to `.mp4` files, and (b) extract the correct speed values at each video frame. These can be run with the following commands:
+We thus provide three auxiliary scripts:(a) convert the input videos to `.mp4` files, (b) crop the initial frames to remove static elements such as the front of the car's cockpit and further resize them to 290 x 118 pixels, and (c) extract the correct speed values at each video frame. These can be run with the following commands:
 
 ```bash
 # load necessary modules (only if running on Euler)
@@ -43,11 +47,22 @@ source scripts/setup_euler.sh
 # convert videos to mp4 format (takes a few hours)
 python scripts/convert_videos.py
 
+# crop and resize mp4 videos (takes a few hours)
+python scripts/compress_videos.py
+
 # extract required speed values (takes a few seconds)
 python scripts/extract_velocities.py
 ``` 
 
-After that, there will be two files `video.mp4` and `speeds.npy` for every video sequence.
+After that, there will be two files `video_comcro.mp4` and `speeds.npy` for every video sequence.
+
+### Additional dependencies
+For depth estimation we use a model from [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) that is loaded with `torch.hub.load`. If this code is executed in an environment with restricted access to the Internet, it is not possible to load the model in this fashion. As a workaround, we manually copied the required model into a directory `/torch_hub`. Our code then automatically checks if this directory exists and, if this is the case, loads the content from there. To replicate this setup, perform the following steps:
+- Execute the download script on a machine that has access to the Internet by running `python scripts/download_midas.py`
+- The model will be downloaded and cached on the machine. This is usually in the directory `~/.cache/torch/hub`
+- Create a new directory 'torch_hub' in the top level of this project on the machine with restricted access.
+- Copy the content of your local cache into this directory by e.g. using FTP
+- Rerun the script on the target machine to check if the model can be loaded correctly from the directory
 
 ## Directory Structure
 <details><summary>Click here to show the structure of the directory.</summary>
@@ -66,7 +81,13 @@ After that, there will be two files `video.mp4` and `speeds.npy` for every video
  ┃ ┃ ┃ ┃ ┃ ┣ 📂raw-data-folders
  ┃ ┃ ┃ ┃ ┃ ┣ ...
  ┃ ┃ ┃ ┃ ┃ ┣ 📜speeds.npy
- ┃ ┃ ┃ ┃ ┃ ┗ 📜video.mp4
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜video_comcro.mp4
+ ┣ 📂scripts
+ ┃ ┣ 📜compress_video.py
+ ┃ ┣ 📜convert_video.py
+ ┃ ┣ 📜download_midas.py
+ ┃ ┣ 📜extract_velocities.py
+ ┃ ┗ 📜setup_euler.sh
  ┣ 📂src
  ┃ ┣ 📂data_loader
  ┃ ┃ ┣ 📂datasets
@@ -74,13 +95,17 @@ After that, there will be two files `video.mp4` and `speeds.npy` for every video
  ┃ ┃ ┃ ┗ 📜runner_datasets.py
  ┃ ┃ ┗ 📜default.py
  ┃ ┣ 📂initializer
- ┃ ┃ ┣ 📜initialization.py
- ┃ ┃ ┗ 📜initialization_dataset.py
+ ┃ ┃ ┣ 📜initialization_dataset.py
+ ┃ ┃ ┗ 📜initialization.py
  ┃ ┣ 📂models
- ┃ ┃ ┣ 📜cnn_lstm.py
+ ┃ ┃ ┣ 📜bandari_baseline.py
+ ┃ ┃ ┣ 📜dof_cnn_lstm.py
+ ┃ ┃ ┣ 📜dof_cnn.py
+ ┃ ┃ ┣ 📜dual_cnn_lstm.py
  ┃ ┃ ┗ 📜runner_models.py
  ┃ ┣ 📂preprocessing
  ┃ ┃ ┣ 📜default.py
+ ┃ ┃ ┣ 📜optical_flow.py
  ┃ ┃ ┗ 📜runner_preprocessing.py
  ┃ ┣ 📜test_loop.py
  ┃ ┗ 📜train_loop.py
@@ -89,11 +114,46 @@ After that, there will be two files `video.mp4` and `speeds.npy` for every video
 ```
 </details>
 
-Notes: tbd
+### Directory contents
 
-## Reproducing Results
+- /config: Configuration files
+- /data: Data files
+- /scripts: Helper scripts for converting and compressing the video frames, extracting the velocities from the data set, and setting up the required environment for them on euler
+- /src/data_loader: Initializes data loader and loads data during training/testing
+- /src/initializer: Initializes configuration and fixes seeds
+- /src/models: Implementation of models and handles loading of them
+- /src/preprocessing: Implementation of preprocessing and handles loading of them
+- /src: Training and Testing loops
+- /: Scripts for starting the pipeline for training and testing
 
-tbd.
+## Training and Evaluation
+
+### Configuration Files
+There are two different configuration files: /config/dataset_config/commai-ai.yaml defines the configuration for the comma ai dataset and /config/default.yaml defines the configuration for the model itself. For a detailed description of the parameters available we refer to the comments in these files. Make sure to define everything appropriately before continuing to the next steps.
+
+### Training
+
+After defining the models and parameters in the configuration, training can be start by executing the following command within the initialized environment
+```bash
+python runner_training.py --test
+```
+The `--test` flag is optional and automatically triggers the evaluation after training has finished.
+The `--local` flag defines if the paths specified under local or under euler should be used.
+
+To issue a job that runs on the Euler cluster of ETH Zürich execute within the initialized environment
+```bash
+bsub -R "rusage[mem=10000, ngpus_excl_p=1]" -R "select[gpu_mtotal0>=10240]" -W x:00 python runner_training.py --test
+``` 
+Note that the required amount of time depends on the selected configuration.
+
+### Manual evaluation
+
+Evaluation can be automatically triggered after training by appending the `--test` flag. To manually trigger the evaluation execute 
+```bash
+python runner_testing.py
+```
+The weights used for evaluation can either be specified by (a) appending `--weights [dir]` to the above command where [dir] is the name of the directory within the output_path directory and should be of the form 'run_2022-xx-xx_xx-xx-xx' or (b) defining it in the configuration file.
+
 
 ## Deliverables
 

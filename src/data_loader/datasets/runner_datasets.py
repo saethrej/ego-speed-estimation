@@ -1,4 +1,8 @@
+"""
 
+This file loads the dataset that was specified in the configuration
+
+"""
 
 from src.data_loader.datasets.commaAI import CommaAI
 
