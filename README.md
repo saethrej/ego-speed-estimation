@@ -36,9 +36,9 @@ unzip Chunk_X.zip -d /path/to/ego-speed-estimation/data/comma2k19/
 ```
 
 ### Pre-Processing the comma2k19 Dataset 
-The comma2k19 dataset consists of 2019 video sequences, each of 1 minute length, captured at 20 fps, and thus denote a sequence of 1200 frames. The raw videos are provided as `.hevc` files, which cannot be read with a standard libraries such as `torchvision`. Moreover, the vehicle's speed data has a higher temporal resolution than the camera's frame rate. 
+The comma2k19 dataset consists of 2019 video sequences, each of 1 minute length, captured at 20 fps, and thus denote a sequence of 1200 frames. The raw videos are provided as `.hevc` files, which cannot be directly read with standard libraries such as `torchvision`. Moreover, the vehicle's speed data has a higher temporal resolution than the camera's frame rate. 
 
-We thus provide three auxiliary scripts:(a) convert the input videos to `.mp4` files, (b) crop the initial frames to remove static elements such as the front of the car's cockpit and further resize them to 290 x 118 pixels, and (c) extract the correct speed values at each video frame. These can be run with the following commands:
+We thus provide three auxiliary scripts: (a) converts the input videos to `.mp4` files, (b) crops the initial frames to remove static elements such as the front of the car's cockpit and further resize them to 290 x 118 pixels, and (c) extracts the correct speed values at each video frame. To run the scripts use the following commands:
 
 ```bash
 # load necessary modules (only if running on Euler)
@@ -54,7 +54,7 @@ python scripts/compress_videos.py
 python scripts/extract_velocities.py
 ``` 
 
-After that, there will be two files `video_comcro.mp4` and `speeds.npy` for every video sequence.
+The scripts will generate two files `video_comcro.mp4` and `speeds.npy` for every video sequence.
 
 ### Additional dependencies
 For depth estimation we use a model from [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) that is loaded with `torch.hub.load`. If this code is executed in an environment with restricted access to the Internet, it is not possible to load the model in this fashion. As a workaround, we manually copied the required model into a directory `/torch_hub`. Our code then automatically checks if this directory exists and, if this is the case, loads the content from there. To replicate this setup, perform the following steps:
