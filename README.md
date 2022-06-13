@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ```
 
 ### Downloading the comma2k19 Dataset
-We use the [comma2k19](https://github.com/commaai/comma2k19 "Link to the git repository") dataset from [comma.ai](https://comma.ai/ "link to comma.ai webpage") for this project. The full dataset is approximately 100GB in size and must be downloaded via Torrent from Academic Torrents [here](https://academictorrents.com/details/65a2fbc964078aff62076ff4e103f18b951c5ddb). Note that it is also possible to download only some of the chunks.
+We use the [comma2k19](https://github.com/commaai/comma2k19 "Link to the git repository") dataset from [comma.ai](https://comma.ai/ "link to comma.ai webpage") for this project. The full dataset is approximately 100GB in size and must be downloaded via Torrent from Academic Torrents [here](https://academictorrents.com/details/65a2fbc964078aff62076ff4e103f18b951c5ddb). Note that it is also possible to partially download the dataset by selecting dataset chunks.
 
 When downloaded, unzip the individual chunks in the `data/comma2k19' directory via the following command (replace X with chunk number):
 ```bash
