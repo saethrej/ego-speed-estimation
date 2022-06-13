@@ -36,7 +36,7 @@ unzip Chunk_X.zip -d /path/to/ego-speed-estimation/data/comma2k19/
 ```
 
 ### Pre-Processing the comma2k19 Dataset 
-The comma2k19 dataset consists of 2085 video sequences of 1 minute length and 1200 frames. The frame rate is thus 20 fps. The videos are stored as `.hevc` files, which cannot be read with standard libraries such as `torchvision`. Moreover, the vehicle's speed data has a higher temporal resolution than the camera's frame rate. 
+The comma2k19 dataset consists of 2019 video sequences, each of 1 minute length, captured at 20 fps, and thus denote a sequence of 1200 frames. The raw videos are provided as `.hevc` files, which cannot be read with a standard libraries such as `torchvision`. Moreover, the vehicle's speed data has a higher temporal resolution than the camera's frame rate. 
 
 We thus provide three auxiliary scripts:(a) convert the input videos to `.mp4` files, (b) crop the initial frames to remove static elements such as the front of the car's cockpit and further resize them to 290 x 118 pixels, and (c) extract the correct speed values at each video frame. These can be run with the following commands:
 
