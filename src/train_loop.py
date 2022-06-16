@@ -1,3 +1,9 @@
+"""
+
+Definition of train loop
+
+"""
+
 import logging as log
 from tqdm import tqdm
 

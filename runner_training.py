@@ -1,3 +1,8 @@
+"""
+
+The training script.
+
+"""
 
 import os
 import torch
@@ -16,6 +21,8 @@ from src.test_loop import test_loop
 from src.models.runner_models import build_model
 from src.data_loader.default import train_dataloader
 
+from runner_testing import test
+
 # initialize logging environment
 log.basicConfig(format='[%(module)15s @ %(asctime)s]: %(message)s', datefmt='%H:%M:%S', level=log.INFO)
 log.debug("Initialized logger")
@@ -23,6 +30,7 @@ log.debug("Initialized logger")
 # parse command line arguments to see whether run is local
 parser = argparse.ArgumentParser()
 parser.add_argument("--local", "-l", action="store_true", help="inidicate that this is a local run")
+parser.add_argument("--test", "-t", action="store_true", help="indicate if testing should be run after training")
 args = parser.parse_args()
 
 # Initialize training run 
@@ -32,8 +40,10 @@ if args.local:
 else:
     config = init_train()
 
+# Select device and optimize
 device =  torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 log.info("Using device: {}".format(device))
+torch.backends.cudnn.benchmark = True
 
 # Get dataloader
 dataloaders = train_dataloader(config)
@@ -52,9 +62,12 @@ optimizer = torch.optim.Adam(model.parameters(), lr=config.model.learning_rate)
 best_loss = float('inf')
 num_epochs = config.model.num_epochs
 
+# Start training
 for t in range(num_epochs):
+    model.train()
     log.info("Starting epoch {}/{}.\n".format(t+1, num_epochs) )
     train_loop(dataloaders['train'], model, loss_fn, optimizer, device)
+    model.eval()
     val_loss = test_loop(dataloaders['val'], model, loss_fn, device)
 
     # save model if it has the best validation score
@@ -64,5 +77,10 @@ for t in range(num_epochs):
         log.info("Model weights stored under {}.".format(model_path))
 
 log.info("Training complete.")
+
+if args.test:
+    # Initialize testing if corresponding flag is set
+    args.weights = model_path.split("/")[-2]
+    test(args)
 
 

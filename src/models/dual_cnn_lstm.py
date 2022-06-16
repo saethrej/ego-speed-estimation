@@ -1,3 +1,9 @@
+'''
+
+Implementation of the Dual-CNN-LSTM model
+
+'''
+
 from turtle import forward
 import torch
 from torch import nn
@@ -10,21 +16,30 @@ class DualCnnLstm(nn.Module):
 
         # store config file
         self.config = config
-        self.N = 0
-        self.L = 0
+        self.N = self.config.model.batch_size
+        self.L = self.config.dataset_config.sample_length
         self.W = 0
         self.H = 0
+
+        # set number of channels according to preprocessing steps
+        self.channels_in = 3
+        if config.preprocessing.video_transform == 'depth_opticalflow':
+            self.channels_in = 4
+        elif config.preprocessing.video_transform == 'opticalflow_gray':
+            self.channels_in = 3
+        elif config.preprocessing.video_transform == 'opticalflow':
+            self.channels_in = 2
 
         # First convolution
         self.first_conv = nn.Sequential(
             nn.Conv2d(
-                in_channels = 3,
+                in_channels = self.channels_in,
                 out_channels = 16,
                 kernel_size=12,
                 stride=1,
                 padding=0
             ),
-            nn.AvgPool2d(2),
+            nn.MaxPool2d(2),
             nn.BatchNorm2d(16),
             nn.ReLU()
         )
@@ -85,9 +100,7 @@ class DualCnnLstm(nn.Module):
         # LSTM
 
         self.lstm = nn.LSTM(
-            input_size = 16128, # 16 * ( ((118 - (12-1))/3 - 2*(24-1)) * ((290 - (12-1))/3 - 2*(24-1)) + ((118 - (12-1))/3 - 2*(12-1)) * ((290 - (12-1))/3 - 2*(12-1))
-            #input_size= 576928, # 16 * ( (118 - (12-1) - 2*(24-1)) * (290 - (12-1) - 2*(24-1)) + (118 - 3*(12-1)) * (290 - 3*(12-1))
-            #input_size= 847872, # 16 * ( (118 - (5-1) - 2*(12-1)) * (290 - (5-1) - 2*(12-1)) + (118 - (5-1) - 2*(6-1)) * (290 - (5-1) - 2*(6-1))
+            input_size = 16128,
             hidden_size=64,
             num_layers=1,
             batch_first = True
@@ -113,7 +126,7 @@ class DualCnnLstm(nn.Module):
         log.debug("Input shape x: {}".format(x.shape))
 
         # combine batch and frame dimensions [N, L, 3, H, W] -> [N*L, 3, H, W]
-        x2 = x.view(NL, 3, self.H, self.W)
+        x2 = x.view(NL, self.channels_in, self.H, self.W)
         log.debug("Input shape of first_conv - x2: {}".format(x2.shape))
 
         # Apply first conv layer

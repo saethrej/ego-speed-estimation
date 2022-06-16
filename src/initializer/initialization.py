@@ -1,3 +1,9 @@
+'''
+
+Processes configuration, sets paths, and fixes seeds for training and testing
+
+'''
+
 
 import os
 from xmlrpc.client import Boolean
@@ -9,6 +15,7 @@ import random as python_random
 from random import randint
 from box import Box
 import logging as log
+import torch
 
 from src.initializer.initialization_dataset import dataset_config
 
@@ -40,39 +47,44 @@ def init_train(local: Boolean = False):
     log.info("Loaded dataset configuration.")
 
     # Fix seeds
-    # TODO: Fix seeds for torch
     np.random.seed(config.seed)
     python_random.seed(config.seed)
+    torch.manual_seed(config.seed)
 
     return config
 
 
-def init_test():
+def init_test(args):
     
     base_path = "config" 
 
     # Load default config
     config = Box.from_yaml(filename=base_path + os.sep + "default.yaml", Loader=yaml.FullLoader)
-    print("Initializer: Loaded default config")
+    log.info("Loaded default config")
 
     # Parse arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--load_run', type=str, required=True,
-                    help='Load pretrained model from run_XXX')
-    args = parser.parse_args()
-    
-    config.load_run = args.load_run
-    config.run_id = args.load_run
-
-    # Set ouput path according to selected run
-    config.paths.output_path = config.paths.output_path + os.sep + config.load_run
+    if args.local:
+        log.info("This is a local run.")
+        config.paths = config.paths.local
+    else:
+        log.info("This is a run on euler.")
+        config.paths = config.paths.euler
+    log.info(config.paths.input_path)
+    if args.weights:
+        # Load weights according to given input argument
+        log.info("Loading weights from input: ./out/{}/model_weights.pth".format(args.weights))
+        config.paths.weights_path = "./out/" + args.weights + "/model_weights.pth"
+    else:
+        # Load weights according to configuration file
+        log.info("Loading weights from config: {}".format(config.paths.weights_path))
 
     # Load dataset config
     config = dataset_config(config)
+    log.info("Loaded dataset configuration.")
 
     # Fix seeds
-    # TODO: Fix seeds for torch
     np.random.seed(config.seed)
     python_random.seed(config.seed)
+    torch.manual_seed(config.seed)
 
     return config
